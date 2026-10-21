@@ -40,6 +40,7 @@ Any static host works the same way: build, then upload `dist/`.
 | Page layouts | `src/pages/*.js` |
 | Header, footer, navigation | `src/templates/layout.js` |
 | Styles | `src/assets/styles.css` |
+| Fonts | `src/assets/fonts/` |
 | Coast chooser and enquiry form behaviour | `src/assets/chooser.js`, `src/assets/enquiry.js` |
 
 Content files are plain JavaScript objects: change the text between the quotes and rebuild. Some copy contains simple HTML such as `<strong>`.
@@ -83,12 +84,20 @@ The central plateau page uses a photo from Black River Gorges National Park (on 
 - Stays are marked as placeholders on the site. Replace them with real partners.
 - Every factual claim that needs checking is listed in [`FACTS-TO-VERIFY.md`](FACTS-TO-VERIFY.md). When you change a claim, update that list too.
 
+## Design
+
+The look follows editorial travel sites: oversized serif display type over full-bleed photography, small monospace labels with index numbers, hairline grids, index-style lists, a "day of eating" timeline and a large wordmark in the footer.
+
+- **Fonts:** Instrument Serif (display), Inter Tight (text) and IBM Plex Mono (labels). They're self-hosted from `src/assets/fonts/` (Latin subset, SIL Open Font License), so no request goes to Google at runtime. To change fonts, swap the files and update `fonts.css` and the `--font-*` variables at the top of `styles.css`.
+- **Colour:** only the palette variables from `site.config.js`. Dark sections use `ink` with `sand` text and `fog` for secondary text.
+- **Motion:** a slow zoom on hero photos and a fade-up as sections scroll into view. Both are switched off for visitors who prefer reduced motion, and content is fully visible without JavaScript.
+
 ## Accessibility and performance
 
 - Semantic HTML with landmarks, a skip link, visible focus styles and labelled form fields with an error summary.
-- Works without JavaScript: the menu stays open, the coast chooser shows a month plus a full-year table, and the form falls back to a `mailto:` submission.
+- Works without JavaScript: the navigation shows as a plain list, the coast chooser shows a month plus a full-year table, and the form falls back to a `mailto:` submission.
 - Respects `prefers-reduced-motion`.
-- System fonts (no web-font download), one stylesheet, and a few kilobytes of script on the pages that need it.
+- Three self-hosted font files are preloaded (about 85 KB in total); one stylesheet and a few kilobytes of script on the pages that need it.
 - Responsive images with `srcset`; only the hero image loads eagerly.
 - The site was checked with axe-core (WCAG 2.1 AA rules) at phone and desktop widths. White hero text sits on a dark gradient over the photo; automated tools can't measure contrast over images, so check new hero photos by eye.
 

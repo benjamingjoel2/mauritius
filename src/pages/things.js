@@ -1,50 +1,51 @@
 const things = require("../content/things");
 const { figure } = require("../templates/helpers");
-const { pageHero, enquiryCta } = require("../templates/components");
+const { pageHero, enquiryCta, pad } = require("../templates/components");
 
 module.exports = () => {
   const body = `
 ${pageHero({
   kicker: "Things to do",
-  title: "Hikes, lagoons, reefs, estates and markets",
+  title: "Hikes, lagoons, <em>reefs</em> and markets",
   lede: "The best of Mauritius is mostly outdoors and mostly early in the day. Here's where to start.",
   photo: "gK_1lF9Mj2o",
 })}
-<nav class="section-nav" aria-label="On this page">
-  <div class="wrap">
+<nav class="chip-nav" aria-label="On this page">
+  <div class="container">
     <ul role="list">
-      ${things.map((t) => `<li><a href="#${t.slug}">${t.name}</a></li>`).join("")}
+      ${things.map((t, i) => `<li><a href="#${t.slug}"><span class="label">${pad(i + 1)}</span> ${t.name}</a></li>`).join("")}
     </ul>
   </div>
 </nav>
 ${things
   .map(
-    (t, i) => `<section class="section ${i % 2 ? "section-sand" : ""}" id="${t.slug}" aria-labelledby="${t.slug}-title">
-  <div class="wrap">
-    <div class="split ${t.photo ? "" : "split-text"}">
-      <div>
-        <p class="kicker kicker-${t.accent}">${String(i + 1).padStart(2, "0")}</p>
-        <h2 id="${t.slug}-title">${t.name}</h2>
-        <p class="section-lede">${t.intro}</p>
+    (t, i) => `<section class="sec theme ${i % 2 ? "sec-paper" : ""}" id="${t.slug}" aria-labelledby="${t.slug}-title">
+  <div class="container">
+    <div class="theme-head">
+      <div class="theme-intro" data-reveal>
+        <p class="label"><span class="label-index">(${pad(i + 1)})</span> Things to do</p>
+        <h2 class="display theme-title" id="${t.slug}-title">${t.name}</h2>
+        <p class="sec-lede">${t.intro}</p>
       </div>
       ${
         t.photo
-          ? figure(t.photo, { sizes: "(min-width: 60em) 45vw, 100vw", ratio: 3 / 2 })
+          ? figure(t.photo, { className: "theme-photo", sizes: "(min-width: 64em) 40vw, 100vw", ratio: 4 / 5 })
           : `<div class="earth-panel" aria-hidden="true"><span></span><span></span><span></span></div>`
       }
     </div>
-    <ul class="activity-list" role="list">
+    <ol class="rows rows-4" role="list">
       ${t.items
         .map(
-          (item) => `<li class="activity" style="--accent: var(--${t.accent})">
-        <h3>${item.title}</h3>
-        <p class="activity-meta"><span>${item.where}</span><span>${item.level}</span></p>
-        <p>${item.text}</p>
+          (item, n) => `<li class="row" data-reveal>
+        <span class="label row-num">${pad(n + 1)}</span>
+        <h3 class="row-title">${item.title}</h3>
+        <p class="label row-meta"><span>${item.where}</span><span>${item.level}</span></p>
+        <p class="row-text">${item.text}</p>
       </li>`,
         )
         .join("")}
-    </ul>
-    <p class="note">${t.note}</p>
+    </ol>
+    <p class="note note-box"><span class="label">Good to know</span> ${t.note}</p>
   </div>
 </section>`,
   )

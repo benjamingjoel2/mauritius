@@ -32,8 +32,8 @@ function paletteCss() {
 }
 
 function favicon() {
-  const { lagoon, cane, white } = config.palette;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${lagoon}"/><path d="M0 44h64v20H0z" fill="${cane}" clip-path="circle(32px at 32px 32px)"/><text x="32" y="38" font-family="Georgia,serif" font-size="24" font-weight="700" fill="${white}" text-anchor="middle">${config.brand.monogram}</text></svg>`;
+  const { ink, sand } = config.palette;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${ink}"/><text x="32" y="40" font-family="Georgia,serif" font-size="24" fill="${sand}" text-anchor="middle">${config.brand.monogram}</text></svg>`;
 }
 
 function build() {
@@ -48,7 +48,14 @@ function build() {
   fs.mkdirSync(OUT, { recursive: true });
 
   // Assets
-  write("styles.css", paletteCss() + fs.readFileSync(path.join(ASSETS, "styles.css"), "utf8"));
+  const fontsDir = path.join(ASSETS, "fonts");
+  write(
+    "styles.css",
+    paletteCss() + fs.readFileSync(path.join(fontsDir, "fonts.css"), "utf8") + "\n" + fs.readFileSync(path.join(ASSETS, "styles.css"), "utf8"),
+  );
+  for (const file of fs.readdirSync(fontsDir)) {
+    if (file.endsWith(".woff2")) write(path.join("fonts", file), fs.readFileSync(path.join(fontsDir, file)));
+  }
   for (const file of fs.readdirSync(ASSETS)) {
     if (file.endsWith(".js")) fs.copyFileSync(path.join(ASSETS, file), path.join(OUT, file));
   }

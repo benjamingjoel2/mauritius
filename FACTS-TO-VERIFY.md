@@ -135,6 +135,12 @@ Claims were written from general knowledge, not from a single checked source. We
 - [ ] Royal Street separates the market area from Chinatown; Le Caudan waterfront is a short walk away.
 - [ ] Many stalls close early on Sundays and public holidays.
 
+## Coordinates and site-wide copy
+
+- [ ] Home hero label: Le Morne Brabant at 20°27′S 57°19′E.
+- [ ] Footer label: 20°10′S 57°31′E (Port Louis).
+- [ ] Home "street-food day" times (08:00, 10:30, 12:30, 15:30, 16:30) are suggestions; check they match local habits (for example, when dholl puri stalls open and sell out).
+
 ## Practical and safety advice
 
 - [ ] Blue Bay: feeding fish is discouraged.

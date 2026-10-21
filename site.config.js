@@ -51,19 +51,20 @@ module.exports = {
 
   // Palette. Names describe where each colour comes from on the island.
   palette: {
-    lagoon: "#0A6B72", // deep lagoon: links, primary buttons
-    lagoonBright: "#4CC9C4", // shallow lagoon: highlights on dark
-    lagoonMist: "#DDF3F1", // lagoon tint: soft panels
+    lagoon: "#0B6670", // deep lagoon: links, primary buttons
+    lagoonBright: "#5ED1C8", // shallow lagoon: highlights on dark
+    lagoonMist: "#DCEDEA", // lagoon tint: soft panels
     cane: "#3B6421", // sugar-cane leaf
-    caneLight: "#BFD98A", // young cane
+    caneLight: "#C3D98E", // young cane
     rust: "#9A3B19", // Chamarel red earth
     violet: "#5B3B7C", // Chamarel violet earth
-    ochre: "#E0A83E", // Chamarel ochre earth
-    coral: "#F27D63", // coral
-    sand: "#FBF6EC", // white sand: page background
-    sandDeep: "#F2E6CF", // wet sand: alternate panels
-    ink: "#1C2A2E", // body text
-    inkSoft: "#46575B", // secondary text
+    ochre: "#E2A93F", // Chamarel ochre earth
+    coral: "#F08066", // coral
+    sand: "#F3EEE4", // white sand: page background
+    sandDeep: "#E8DFCF", // wet sand: alternate panels
+    ink: "#11201F", // body text and dark sections (lagoon at night)
+    inkSoft: "#47534F", // secondary text
+    fog: "#AEB9B4", // secondary text on dark sections
     white: "#FFFFFF",
   },
 
@@ -100,5 +101,7 @@ module.exports = {
     ["lagoonBright", "ink"],
     ["ochre", "ink"],
     ["caneLight", "ink"],
+    ["coral", "ink"],
+    ["fog", "ink"],
   ],
 };

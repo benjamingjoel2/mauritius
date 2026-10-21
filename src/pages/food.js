@@ -1,51 +1,59 @@
 const { trail, roots, traditions } = require("../content/food");
 const { figure } = require("../templates/helpers");
-const { pageHero, enquiryCta } = require("../templates/components");
+const { pageHero, sectionHead, enquiryCta, pad } = require("../templates/components");
 
 const tag = (r) => `<span class="tag" style="--tag: var(--${roots[r].color})">${roots[r].label}</span>`;
+
+// Suggested times of day. Illustrative only; see whenDetail for the advice.
+const TIMES = ["08:00", "10:30", "12:30", "15:30", "16:30"];
 
 module.exports = () => {
   const body = `
 ${pageHero({
   kicker: "Food",
-  title: "An island you can taste",
+  title: "An island <em>you can taste</em>",
   lede: "Indian, Creole, Chinese and French cooking have been borrowing from each other in Mauritius for nearly two centuries. The best of it is cheap, quick and eaten standing up.",
   photo: "Iiw8FxkZHfI",
 })}
 
-<section class="section">
-  <div class="wrap">
-    <h2 class="section-title">Four kitchens, one island</h2>
-    <ul class="traditions" role="list">
+<section class="sec" aria-labelledby="kitchens-title">
+  <div class="container">
+    ${sectionHead({ index: 1, label: "Roots", title: "Four kitchens, <em>one island</em>", id: "kitchens-title" })}
+    <ol class="columns-4" role="list">
       ${traditions
-        .map((t) => `<li style="--accent: var(--${t.color})"><h3>${t.title}</h3><p>${t.text}</p></li>`)
+        .map(
+          (t, i) => `<li class="col-item" style="--accent: var(--${t.color})" data-reveal>
+        <span class="label">${pad(i + 1)}</span>
+        <h3 class="col-title">${t.title}</h3>
+        <p>${t.text}</p>
+      </li>`,
+        )
         .join("")}
-    </ul>
+    </ol>
   </div>
 </section>
 
-<section class="section section-sand" id="trail" aria-labelledby="trail-title">
-  <div class="wrap">
-    <p class="kicker">Signature trail</p>
-    <h2 id="trail-title">The street-food trail</h2>
-    <p class="section-lede">Five dishes in the order you'd eat them through a day. Each one tells part of the island's story: who arrived, when, and what they cooked.</p>
+<section class="sec sec-dark" id="trail" aria-labelledby="trail-title">
+  <div class="container">
+    ${sectionHead({ index: 2, label: "Signature trail", title: "The street-food <em>trail</em>", id: "trail-title", lede: "Five dishes in the order you'd eat them through a day. Each one tells part of the island's story: who arrived, when, and what they cooked. Times are suggestions." })}
     <p class="legend" aria-label="Key to roots">${Object.keys(roots).map(tag).join("")}</p>
     <ol class="trail" role="list">
       ${trail
         .map(
-          (d, i) => `<li class="trail-stop" id="${d.slug}">
-        <div class="trail-marker" aria-hidden="true"><span>${i + 1}</span></div>
+          (d, i) => `<li class="trail-stop" id="${d.slug}" data-reveal>
+        <div class="trail-time">
+          <span class="display trail-clock">${TIMES[i]}</span>
+          <span class="label">${pad(i + 1)} · ${d.when}</span>
+        </div>
         <article class="trail-card">
-          <header>
-            <p class="trail-time">${d.when}</p>
-            <h3>${d.name} <span class="say">(say <i>${d.say}</i>)</span></h3>
-            <p class="tags">${d.roots.map(tag).join("")}</p>
-          </header>
+          <h3 class="display trail-name">${d.name}</h3>
+          <p class="label trail-say">Say “${d.say}”</p>
+          <p class="tags">${d.roots.map(tag).join("")}</p>
           <dl class="trail-facts">
-            <dt>What it is</dt><dd>${d.what}</dd>
-            <dt>Where it comes from</dt><dd>${d.story}</dd>
-            <dt>When to eat it</dt><dd>${d.whenDetail}</dd>
-            <dt>Where to find it</dt><dd>${d.where}</dd>
+            <div><dt class="label">What it is</dt><dd>${d.what}</dd></div>
+            <div><dt class="label">Where it comes from</dt><dd>${d.story}</dd></div>
+            <div><dt class="label">When to eat it</dt><dd>${d.whenDetail}</dd></div>
+            <div><dt class="label">Where to find it</dt><dd>${d.where}</dd></div>
           </dl>
         </article>
       </li>`,
@@ -55,20 +63,20 @@ ${pageHero({
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap split">
-    <div>
-      <h2>Eating well, eating safely</h2>
-      <ul class="checklist">
-        <li>Busy stalls turn food over fast. Follow the queue.</li>
-        <li>Chilli is served on the side more often than not: ask for <i>enn ti pe</i> (a little) if you're unsure.</li>
-        <li>Carry small notes in Mauritian rupees.</li>
-        <li>Many vegetarian options: dholl puri, farata with bean curry, gateau piment and alouda are often meat-free. Ask to be sure.</li>
-        <li>Street food is a daytime thing. In the evening, look for family-run restaurants instead.</li>
-      </ul>
-      <p><a href="/journal/street-food-day-port-louis/">Read: how to eat your way through a day in Port Louis</a></p>
+<section class="sec" aria-labelledby="tips-title">
+  <div class="container tips-grid">
+    <div data-reveal>
+      ${sectionHead({ index: 3, label: "Practical", title: "Eating well, <em>eating safely</em>", id: "tips-title" })}
+      <ol class="rows rows-tight" role="list">
+        <li class="row"><span class="label row-num">01</span><p class="row-text">Busy stalls turn food over fast. Follow the queue.</p></li>
+        <li class="row"><span class="label row-num">02</span><p class="row-text">Chilli usually comes on the side: ask for <i>enn ti pe</i> (a little) if you're unsure.</p></li>
+        <li class="row"><span class="label row-num">03</span><p class="row-text">Carry small notes in Mauritian rupees.</p></li>
+        <li class="row"><span class="label row-num">04</span><p class="row-text">Dholl puri, farata with bean curry, gateau piment and alouda are often meat-free. Ask to be sure.</p></li>
+        <li class="row"><span class="label row-num">05</span><p class="row-text">Street food is a daytime thing. In the evening, look for family-run restaurants.</p></li>
+      </ol>
+      <a class="arrow-link" href="/journal/street-food-day-port-louis/">Read: a day of eating in Port Louis <span aria-hidden="true">→</span></a>
     </div>
-    ${figure("BvxRDzTXqjc", { sizes: "(min-width: 60em) 45vw, 100vw", ratio: 3 / 2 })}
+    ${figure("BvxRDzTXqjc", { sizes: "(min-width: 64em) 45vw, 100vw", ratio: 4 / 5 })}
   </div>
 </section>
 ${enquiryCta("Want a guided food day in Port Louis, or a cooking class in a family home? Tell us what you'd like.")}`;

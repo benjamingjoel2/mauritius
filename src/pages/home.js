@@ -1,104 +1,130 @@
 const config = require("../../site.config");
 const regions = require("../content/regions");
 const { trail, roots } = require("../content/food");
+const { months, coastNames } = require("../content/months");
 const journal = require("../content/journal");
-const { esc, figure, formatDate } = require("../templates/helpers");
-const { pageHero, enquiryCta, card } = require("../templates/components");
+const { esc, img, credit, formatDate } = require("../templates/helpers");
+const { pageHero, sectionHead, enquiryCta, card, indexRow, pad } = require("../templates/components");
 
 const PILLARS = [
   {
     title: "Food",
     text: "Indian, Creole, Chinese and French cooking side by side, and a street-food trail from dholl puri at breakfast to alouda in the afternoon heat.",
     href: "/food/",
-    color: "ochre",
   },
   {
     title: "Hiking",
-    text: "Volcanic peaks, rainforest gorges and a UNESCO mountain, mostly done before lunch.",
+    text: "Volcanic peaks, rainforest gorges and a UNESCO-listed mountain, mostly done before lunch.",
     href: "/things-to-do/#hikes",
-    color: "caneLight",
   },
   {
     title: "Culture",
     text: "Temples, pagodas, churches and mosques; sugar and tea estates; markets where the whole island shops.",
     href: "/things-to-do/#markets",
-    color: "coral",
   },
   {
     title: "Quieter coasts",
-    text: "Pick the right coast for the month and you'll swim in calm water away from the resort strips.",
+    text: "Pick the right coast for the month and swim in calm water, away from the resort strips.",
     href: "/when-to-go/",
-    color: "lagoonBright",
   },
 ];
 
+// Suggested times of day for the trail teaser. Illustrative, not rules.
+const TRAIL_TIMES = ["08:00", "10:30", "12:30", "15:30", "16:30"];
+
+const COAST_CLASS = { north: "c-north", east: "c-east", south: "c-south", west: "c-west" };
+
 module.exports = () => {
   const latest = journal.slice(0, 3);
+
   const body = `
 ${pageHero({
-  kicker: config.brand.tagline,
-  title: "Mauritius, for people who want more than a sunbed",
-  lede: "Street food in Port Louis, dawn hikes, Hindu festivals and Creole Sunday lunches, and the calmest coast for the month you travel. For couples and families.",
+  title: `Mauritius, <em>beyond</em> the resort`,
+  lede: "Street food at eight, a ridge walk before the heat, a Creole Sunday lunch, and the calm side of the island for the month you travel. Trips for couples and families who want more than a sunbed.",
   photo: "WV4B_aVj0aQ",
+  size: "hero-xl",
+  meta: ["Le Morne Brabant", "20°27′S 57°19′E"],
+  actions: `<div class="hero-actions">
+    <a class="pill pill-light" href="/enquire/">Plan a trip <span aria-hidden="true">→</span></a>
+    <a class="pill pill-ghost" href="/when-to-go/">Which coast, which month?</a>
+  </div>`,
 })}
 
-<section class="section">
-  <div class="wrap">
-    <h2 class="section-title">Beyond the resort</h2>
-    <ul class="pillars" role="list">
-      ${PILLARS.map(
-        (p) => `<li class="pillar" style="--accent: var(--${p.color})">
-        <h3><a href="${p.href}">${p.title}</a></h3>
-        <p>${p.text}</p>
-      </li>`,
-      ).join("")}
-    </ul>
-  </div>
-</section>
+<nav class="pillars" aria-label="What we plan trips around">
+  <ol class="container pillars-grid" role="list">
+    ${PILLARS.map(
+      (p, i) => `<li class="pillar">
+      <a href="${p.href}">
+        <span class="label">${pad(i + 1)}</span>
+        <span class="pillar-title">${p.title}</span>
+        <span class="pillar-text">${p.text}</span>
+      </a>
+    </li>`,
+    ).join("")}
+  </ol>
+</nav>
 
-<section class="section section-mist">
-  <div class="wrap split">
+<section class="sec statement" aria-labelledby="idea-title">
+  <div class="container statement-grid">
+    <p class="label" id="idea-title"><span class="label-index">(01)</span> The idea</p>
     <div>
-      <p class="kicker">Signature tool</p>
-      <h2>Which coast, which month?</h2>
-      <p>The south-east trade winds blow hardest from about June to August. That makes the east and south breezy and choppy while the west and north stay calm. In the hot summer months the picture flips, and the east's breeze is what you want.</p>
-      <p>Our chooser shows the calmest coast for every month, plus where to go if you're after wind for kitesurfing instead.</p>
-      <p class="this-month" data-this-month hidden></p>
-      <a class="button" href="/when-to-go/">Open the coast chooser</a>
+      <p class="statement-text" data-reveal>Most people see Mauritius from a sunbed. We plan trips for the other island: <span class="hl">the market at Port Louis</span>, <span class="hl">a ridge above the cane fields</span>, <span class="hl">a Hindu festival</span>, and the lagoon that's calm in the month you're there.</p>
+      <dl class="facts-row" data-reveal>
+        <div><dt class="label">Regions</dt><dd class="display">6</dd></div>
+        <div><dt class="label">Months mapped</dt><dd class="display">12</dd></div>
+        <div><dt class="label">Street foods</dt><dd class="display">5</dd></div>
+        <div><dt class="label">Islands</dt><dd class="display">2</dd></div>
+      </dl>
     </div>
-    ${figure("L6hI8SK9Hr0", { caption: "Kitesurf lessons at Graviers, Rodrigues.", sizes: "(min-width: 60em) 45vw, 100vw" })}
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">Six places, six moods</h2>
-      <a class="more" href="/regions/">All regions</a>
-    </div>
-    <div class="grid grid-3">
+<section class="sec sec-paper" aria-labelledby="regions-title">
+  <div class="container">
+    ${sectionHead({ index: 2, label: "Regions", title: "Six places, <em>six moods</em>", id: "regions-title", link: { href: "/regions/", text: "All regions" } })}
+    <ol class="index-list" role="list">
       ${regions
-        .map((r) => card({ href: `/regions/${r.slug}/`, photo: r.photo, title: r.name, kicker: r.kicker, text: r.summary }))
+        .map((r, i) => indexRow({ href: `/regions/${r.slug}/`, index: i + 1, title: r.name.replace(/^The /, ""), kicker: r.kicker, text: r.summary, photo: r.photo }))
         .join("")}
+    </ol>
+  </div>
+</section>
+
+<section class="sec sec-dark coast-teaser" aria-labelledby="coast-title">
+  <div class="container">
+    ${sectionHead({ index: 3, label: "Signature tool", title: "Which coast, <em>which month?</em>", id: "coast-title", lede: "The south-east trade winds blow hardest from about June to August, making the east and south breezy while the west and north stay calm. In the hot summer months, the east's breeze is what you want." })}
+    <div class="coast-strip" data-reveal>
+      <table class="coast-strip-table">
+        <caption class="visually-hidden">Calmest coast for each month</caption>
+        <thead><tr><th scope="row" class="label">Month</th>${months.map((m) => `<th scope="col" class="label">${m.name.slice(0, 3)}</th>`).join("")}</tr></thead>
+        <tbody><tr><th scope="row" class="label">Calmest</th>${months
+          .map((m) => `<td class="${COAST_CLASS[m.best]}"><span class="coast-letter">${coastNames[m.best][0]}</span><span class="visually-hidden">${coastNames[m.best]}</span></td>`)
+          .join("")}</tr></tbody>
+      </table>
+      <p class="coast-strip-key label"><span class="c-north">N</span> North <span class="c-east">E</span> East <span class="c-west">W</span> West</p>
+    </div>
+    <div class="coast-teaser-foot" data-reveal>
+      <p class="this-month" data-this-month hidden></p>
+      <a class="pill pill-light" href="/when-to-go/">Open the coast chooser <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
 
-<section class="section section-sand">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">The street-food trail</h2>
-      <a class="more" href="/food/#trail">Follow the trail</a>
+<section class="sec day" aria-labelledby="day-title">
+  <div class="container day-grid">
+    <div class="day-intro">
+      ${sectionHead({ index: 4, label: "The street-food trail", title: "A day of eating <em>in Port Louis</em>", id: "day-title", lede: "Five dishes and four culinary roots, in the order you'd eat them." })}
+      <p class="day-clock display" aria-hidden="true">08:00</p>
+      <a class="arrow-link" href="/food/#trail">Follow the full trail <span aria-hidden="true">→</span></a>
     </div>
-    <p class="section-lede">Five dishes, four culinary roots, one day. Eat them in this order.</p>
-    <ol class="trail-mini" role="list">
+    <ol class="day-list" role="list">
       ${trail
         .map(
-          (d, i) => `<li>
-        <span class="trail-step" aria-hidden="true">${i + 1}</span>
+          (d, i) => `<li class="day-item" data-reveal>
+        <span class="label day-time">${TRAIL_TIMES[i]}</span>
         <div>
-          <h3><a href="/food/#${d.slug}">${d.name}</a></h3>
-          <p class="trail-when">${d.when}</p>
+          <h3 class="day-dish"><a href="/food/#${d.slug}">${d.name}</a></h3>
+          <p class="day-when">${d.when}. ${d.what.split(". ")[0].replace(/\.$/, "")}.</p>
           <p class="tags">${d.roots.map((r) => `<span class="tag" style="--tag: var(--${roots[r].color})">${roots[r].label}</span>`).join("")}</p>
         </div>
       </li>`,
@@ -108,16 +134,21 @@ ${pageHero({
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="section-title">From the journal</h2>
-      <a class="more" href="/journal/">All stories</a>
-    </div>
-    <div class="grid grid-3">
-      ${latest
-        .map((p) => card({ href: `/journal/${p.slug}/`, photo: p.photo, title: esc(p.title), kicker: formatDate(p.date), text: esc(p.summary) }))
-        .join("")}
+<section class="split" aria-labelledby="name-title">
+  <div class="split-media">${img("h2DBBDaFBbg", { ratio: 1, sizes: "(min-width: 64em) 50vw, 100vw" })}<p class="credit split-credit">${credit("h2DBBDaFBbg")}</p></div>
+  <div class="split-panel">
+    <p class="label">(05) The name</p>
+    <h2 class="display split-title" id="name-title">${esc(config.brand.name)}</h2>
+    <p>${esc(config.brand.nameStory)}</p>
+    <a class="arrow-link" href="/about/">About us <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="journal-title">
+  <div class="container">
+    ${sectionHead({ index: 6, label: "Journal", title: "Stories <em>and guides</em>", id: "journal-title", link: { href: "/journal/", text: "All stories" } })}
+    <div class="cards">
+      ${latest.map((p, i) => card({ href: `/journal/${p.slug}/`, photo: p.photo, title: esc(p.title), kicker: formatDate(p.date), index: i + 1, text: esc(p.summary) })).join("")}
     </div>
   </div>
 </section>

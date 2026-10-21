@@ -1,33 +1,36 @@
 const regions = require("../content/regions");
 const stays = require("../content/stays");
 const { esc, figure } = require("../templates/helpers");
-const { pageHero, enquiryCta, card } = require("../templates/components");
+const { pageHero, sectionHead, enquiryCta, indexRow, pad } = require("../templates/components");
+
+const shortName = (r) => r.name.replace(/^The /, "");
 
 function indexPage() {
   const body = `
 ${pageHero({
   kicker: "Regions",
-  title: "Where to go in Mauritius",
-  lede: "Each coast has its own weather, its own pace and its own best months. Add the cool central plateau and the slow island of Rodrigues, and you have six very different trips.",
+  title: "Where to go <em>in Mauritius</em>",
+  lede: "Each coast has its own weather, pace and best months. Add the cool central plateau and the slow island of Rodrigues, and you have six very different trips.",
   photo: "IfRThYDUjCE",
 })}
-<section class="section" aria-labelledby="regions-list">
-  <div class="wrap">
-    <h2 id="regions-list" class="visually-hidden">All regions</h2>
-    <div class="grid grid-3">
+<section class="sec" aria-labelledby="regions-list">
+  <div class="container">
+    ${sectionHead({ index: 1, label: "Six regions", title: "Choose your <em>side of the island</em>", id: "regions-list", link: { href: "/when-to-go/", text: "Which coast, which month?" } })}
+    <ol class="index-list" role="list">
       ${regions
-        .map((r) =>
-          card({
+        .map((r, i) =>
+          indexRow({
             href: `/regions/${r.slug}/`,
-            photo: r.photo,
-            title: r.name,
+            index: i + 1,
+            title: shortName(r),
             kicker: r.kicker,
-            text: `${r.summary} <strong class="card-meta">Calmest: ${esc(r.calmMonths)}</strong>`,
+            text: r.summary,
+            aside: `Calmest: ${esc(r.calmMonths)}`,
+            photo: r.photo,
           }),
         )
         .join("")}
-    </div>
-    <p class="note">Not sure which coast suits your dates? <a href="/when-to-go/">Use the coast chooser</a>.</p>
+    </ol>
   </div>
 </section>
 ${enquiryCta()}`;
@@ -42,44 +45,62 @@ ${enquiryCta()}`;
 
 function regionPage(region, index) {
   const regionStays = stays.filter((s) => s.region === region.slug);
-  const prev = regions[(index - 1 + regions.length) % regions.length];
   const next = regions[(index + 1) % regions.length];
+  const [first, ...rest] = region.intro;
 
   const body = `
-${pageHero({ kicker: region.kicker, title: region.name, lede: region.summary, photo: region.photo })}
-<section class="section">
-  <div class="wrap prose-grid">
-    <div class="prose">
-      ${region.intro.map((p) => `<p>${p}</p>`).join("")}
-      ${region.photoNote ? `<p class="note">${region.photoNote}</p>` : ""}
+${pageHero({
+  kicker: `${pad(index + 1)} / ${pad(regions.length)} · Regions`,
+  title: shortName(region),
+  lede: region.summary,
+  photo: region.photo,
+  meta: [region.kicker],
+})}
+
+<section class="data-strip" aria-label="${esc(region.name)} at a glance">
+  <dl class="container data-strip-grid">
+    <div><dt class="label">Calmest water</dt><dd>${esc(region.calmMonths)}</dd></div>
+    <div><dt class="label">Good for</dt><dd>${region.bestFor.join(" · ")}</dd></div>
+    <div><dt class="label">Places</dt><dd>${esc(region.kicker)}</dd></div>
+    <div><dt class="label">Plan by month</dt><dd><a href="/when-to-go/">Coast chooser →</a></dd></div>
+  </dl>
+</section>
+
+<section class="sec">
+  <div class="container intro-grid">
+    <p class="label"><span class="label-index">(01)</span> Overview</p>
+    <div>
+      <p class="intro-big" data-reveal>${first}</p>
+      <div class="intro-body" data-reveal>
+        ${rest.map((p) => `<p>${p}</p>`).join("")}
+        ${region.photoNote ? `<p class="note">${region.photoNote}</p>` : ""}
+      </div>
     </div>
-    <aside class="fact-box" aria-label="${esc(region.name)} at a glance">
-      <h2>At a glance</h2>
-      <dl>
-        <dt>Good for</dt>
-        <dd><ul>${region.bestFor.map((b) => `<li>${b}</li>`).join("")}</ul></dd>
-        <dt>Calmest water</dt>
-        <dd>${esc(region.calmMonths)}</dd>
-      </dl>
-      <a href="/when-to-go/">Check the month you're travelling</a>
-    </aside>
   </div>
 </section>
 
-<section class="section section-sand">
-  <div class="wrap">
-    <h2 class="section-title">Highlights</h2>
-    <ul class="highlights" role="list">
-      ${region.highlights.map((h) => `<li><h3>${h.title}</h3><p>${h.text}</p></li>`).join("")}
-    </ul>
+<section class="sec sec-paper" aria-labelledby="hl-title">
+  <div class="container">
+    ${sectionHead({ index: 2, label: "Highlights", title: `What to see <em>and do</em>`, id: "hl-title" })}
+    <ol class="rows" role="list">
+      ${region.highlights
+        .map(
+          (h, i) => `<li class="row" data-reveal>
+        <span class="label row-num">${pad(i + 1)}</span>
+        <h3 class="row-title">${h.title}</h3>
+        <p class="row-text">${h.text}</p>
+      </li>`,
+        )
+        .join("")}
+    </ol>
   </div>
 </section>
 
 ${
   region.gallery.length
-    ? `<section class="section">
-  <div class="wrap gallery gallery-${Math.min(region.gallery.length, 3)}">
-    ${region.gallery.map((id) => figure(id, { sizes: "(min-width: 60em) 33vw, 100vw", ratio: 4 / 3 })).join("")}
+    ? `<section class="sec gallery-sec" aria-label="Photos of ${esc(region.name)}">
+  <div class="container gallery gallery-${Math.min(region.gallery.length, 3)}">
+    ${region.gallery.map((id, i) => figure(id, { className: i === 0 ? "gallery-lead" : "", sizes: i === 0 ? "(min-width: 64em) 60vw, 100vw" : "(min-width: 64em) 35vw, 100vw", ratio: i === 0 ? 4 / 3 : 4 / 5 })).join("")}
   </div>
 </section>`
     : ""
@@ -87,21 +108,30 @@ ${
 
 ${
   regionStays.length
-    ? `<section class="section section-mist">
-  <div class="wrap">
-    <h2 class="section-title">Where to stay</h2>
-    <p class="section-lede">Placeholder listings while we sign up partners.</p>
-    ${regionStays.map((s) => `<p><strong>${esc(s.name)}</strong>, ${esc(s.area)}: ${esc(s.type)}. <a href="/stays/">See all stays</a></p>`).join("")}
+    ? `<section class="sec sec-mist" aria-labelledby="stay-title">
+  <div class="container">
+    ${sectionHead({ index: 3, label: "Where to stay", title: "Small places <em>to stay</em>", id: "stay-title", lede: "Placeholder listings while we sign up partners.", link: { href: "/stays/", text: "All stays" } })}
+    <ul class="rows" role="list">
+      ${regionStays
+        .map(
+          (s) => `<li class="row">
+        <span class="label row-num">${esc(s.area)}</span>
+        <h3 class="row-title">${esc(s.name)}</h3>
+        <p class="row-text">${esc(s.type)}. ${esc(s.text)}</p>
+      </li>`,
+        )
+        .join("")}
+    </ul>
   </div>
 </section>`
     : ""
 }
 
-<nav class="section pager" aria-label="More regions">
-  <div class="wrap pager-inner">
-    <a href="/regions/${prev.slug}/" rel="prev"><span>Previous region</span>${prev.name}</a>
-    <a href="/regions/${next.slug}/" rel="next"><span>Next region</span>${next.name}</a>
-  </div>
+<nav class="next-region" aria-label="Next region">
+  <a class="container next-link" href="/regions/${next.slug}/">
+    <span class="label">Next region · ${pad(((index + 1) % regions.length) + 1)}</span>
+    <span class="display next-title">${shortName(next)} <span aria-hidden="true">→</span></span>
+  </a>
 </nav>
 ${enquiryCta(`Want to build a trip around ${region.name.replace(/^The /, "the ")}? Tell us your dates and what you enjoy.`)}`;
 
