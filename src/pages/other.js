@@ -36,7 +36,7 @@ ${pageHero({
     <ol class="stays" role="list">
       ${stays
         .map(
-          (s, i) => `<li class="stay" data-reveal>
+          (s, i) => `<li class="stay">
         <p class="label stay-top"><span>${pad(i + 1)}</span><span>${esc(regionName(s.region))} · ${esc(s.area)}</span></p>
         <h3 class="display stay-name">${esc(s.name)}</h3>
         <p class="label stay-type">${esc(s.type)} · ${esc(s.sleeps)}</p>
@@ -71,22 +71,22 @@ ${pageHero({
   <div class="container intro-grid">
     <p class="label"><span class="label-index">(01)</span> The name</p>
     <div>
-      <p class="intro-big" data-reveal>${esc(brand.nameStory)}</p>
+      <p class="intro-big">${esc(brand.nameStory)}</p>
     </div>
   </div>
 </section>
 <section class="sec sec-paper">
   <div class="container">
     ${sectionHead({ index: 2, label: "What we do", title: "Trips planned around <em>what you love</em>" })}
-    <div class="two-col" data-reveal>
+    <div class="two-col">
       <p>Most holidays in Mauritius start and end at a resort. Ours start with a question: what do you actually like doing? Then we plan the trip around it: the right coast for the month, a guide for the hike, a table at a family restaurant, and enough free time to do nothing at all.</p>
       <p>We plan trips for couples and families, on the main island and in Rodrigues. We're a new company, so you won't find reviews or awards here yet. When we have them, they'll be real.</p>
     </div>
     <ol class="rows" role="list">
-      <li class="row" data-reveal><span class="label row-num">01</span><h3 class="row-title">Local first</h3><p class="row-text">Smaller, locally owned places to stay where we can.</p></li>
-      <li class="row" data-reveal><span class="label row-num">02</span><h3 class="row-title">By the rules</h3><p class="row-text">Guides and boat operators who follow the rules on marine parks, dolphins and whales.</p></li>
-      <li class="row" data-reveal><span class="label row-num">03</span><h3 class="row-title">Honest weather</h3><p class="row-text">Straight advice on the seasons, including when not to go somewhere.</p></li>
-      <li class="row" data-reveal><span class="label row-num">04</span><h3 class="row-title">Real photos</h3><p class="row-text">Every photo comes from Unsplash, is credited, and is only used where its recorded location matches the place described. <a href="/credits/">See all credits</a>.</p></li>
+      <li class="row"><span class="label row-num">01</span><h3 class="row-title">Local first</h3><p class="row-text">Smaller, locally owned places to stay where we can.</p></li>
+      <li class="row"><span class="label row-num">02</span><h3 class="row-title">By the rules</h3><p class="row-text">Guides and boat operators who follow the rules on marine parks, dolphins and whales.</p></li>
+      <li class="row"><span class="label row-num">03</span><h3 class="row-title">Honest weather</h3><p class="row-text">Straight advice on the seasons, including when not to go somewhere.</p></li>
+      <li class="row"><span class="label row-num">04</span><h3 class="row-title">Real photos</h3><p class="row-text">Every photo comes from Unsplash, is credited, and is only used where its recorded location matches the place described. <a href="/credits/">See all credits</a>.</p></li>
     </ol>
   </div>
 </section>

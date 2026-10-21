@@ -22,7 +22,7 @@ ${pageHero({
     <ol class="columns-4" role="list">
       ${traditions
         .map(
-          (t, i) => `<li class="col-item" style="--accent: var(--${t.color})" data-reveal>
+          (t, i) => `<li class="col-item" style="--accent: var(--${t.color})">
         <span class="label">${pad(i + 1)}</span>
         <h3 class="col-title">${t.title}</h3>
         <p>${t.text}</p>
@@ -40,7 +40,7 @@ ${pageHero({
     <ol class="trail" role="list">
       ${trail
         .map(
-          (d, i) => `<li class="trail-stop" id="${d.slug}" data-reveal>
+          (d, i) => `<li class="trail-stop" id="${d.slug}">
         <div class="trail-time">
           <span class="display trail-clock">${TIMES[i]}</span>
           <span class="label">${pad(i + 1)} · ${d.when}</span>
@@ -65,7 +65,7 @@ ${pageHero({
 
 <section class="sec" aria-labelledby="tips-title">
   <div class="container tips-grid">
-    <div data-reveal>
+    <div>
       ${sectionHead({ index: 3, label: "Practical", title: "Eating well, <em>eating safely</em>", id: "tips-title" })}
       <ol class="rows rows-tight" role="list">
         <li class="row"><span class="label row-num">01</span><p class="row-text">Busy stalls turn food over fast. Follow the queue.</p></li>

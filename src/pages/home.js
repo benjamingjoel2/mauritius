@@ -4,28 +4,32 @@ const { trail, roots } = require("../content/food");
 const { months, coastNames } = require("../content/months");
 const journal = require("../content/journal");
 const { esc, img, credit, formatDate } = require("../templates/helpers");
-const { pageHero, sectionHead, enquiryCta, card, indexRow, pad } = require("../templates/components");
+const { pageHero, sectionHead, enquiryCta, card, tile, pad } = require("../templates/components");
 
 const PILLARS = [
   {
     title: "Food",
     text: "Indian, Creole, Chinese and French cooking side by side, and a street-food trail from dholl puri at breakfast to alouda in the afternoon heat.",
     href: "/food/",
+    photo: "BvxRDzTXqjc",
   },
   {
     title: "Hiking",
     text: "Volcanic peaks, rainforest gorges and a UNESCO-listed mountain, mostly done before lunch.",
     href: "/things-to-do/#hikes",
+    photo: "SsfxuAYTLxg",
   },
   {
     title: "Culture",
     text: "Temples, pagodas, churches and mosques; sugar and tea estates; markets where the whole island shops.",
     href: "/things-to-do/#markets",
+    photo: "h2DBBDaFBbg",
   },
   {
     title: "Quieter coasts",
     text: "Pick the right coast for the month and swim in calm water, away from the resort strips.",
     href: "/when-to-go/",
+    photo: "NeweseMfeeg",
   },
 ];
 
@@ -50,26 +54,21 @@ ${pageHero({
   </div>`,
 })}
 
-<nav class="pillars" aria-label="What we plan trips around">
-  <ol class="container pillars-grid" role="list">
-    ${PILLARS.map(
-      (p, i) => `<li class="pillar">
-      <a href="${p.href}">
-        <span class="label">${pad(i + 1)}</span>
-        <span class="pillar-title">${p.title}</span>
-        <span class="pillar-text">${p.text}</span>
-      </a>
-    </li>`,
-    ).join("")}
-  </ol>
-</nav>
+<section class="sec pillars-sec" aria-labelledby="pillars-title">
+  <div class="container">
+    <h2 class="visually-hidden" id="pillars-title">What we plan trips around</h2>
+    <div class="pillar-tiles">
+      ${PILLARS.map((p, i) => tile({ href: p.href, photo: p.photo, title: p.title, index: i + 1, text: p.text, ratio: 3 / 4, className: "tile-tall", sizes: "(min-width: 64em) 25vw, (min-width: 40em) 50vw, 100vw" })).join("")}
+    </div>
+  </div>
+</section>
 
 <section class="sec statement" aria-labelledby="idea-title">
   <div class="container statement-grid">
     <p class="label" id="idea-title"><span class="label-index">(01)</span> The idea</p>
     <div>
-      <p class="statement-text" data-reveal>Most people see Mauritius from a sunbed. We plan trips for the other island: <span class="hl">the market at Port Louis</span>, <span class="hl">a ridge above the cane fields</span>, <span class="hl">a Hindu festival</span>, and the lagoon that's calm in the month you're there.</p>
-      <dl class="facts-row" data-reveal>
+      <p class="statement-text">Most people see Mauritius from a sunbed. We plan trips for the other island: <span class="hl">the market at Port Louis</span>, <span class="hl">a ridge above the cane fields</span>, <span class="hl">a Hindu festival</span>, and the lagoon that's calm in the month you're there.</p>
+      <dl class="facts-row">
         <div><dt class="label">Regions</dt><dd class="display">6</dd></div>
         <div><dt class="label">Months mapped</dt><dd class="display">12</dd></div>
         <div><dt class="label">Street foods</dt><dd class="display">5</dd></div>
@@ -82,18 +81,19 @@ ${pageHero({
 <section class="sec sec-paper" aria-labelledby="regions-title">
   <div class="container">
     ${sectionHead({ index: 2, label: "Regions", title: "Six places, <em>six moods</em>", id: "regions-title", link: { href: "/regions/", text: "All regions" } })}
-    <ol class="index-list" role="list">
+    <div class="mosaic">
       ${regions
-        .map((r, i) => indexRow({ href: `/regions/${r.slug}/`, index: i + 1, title: r.name.replace(/^The /, ""), kicker: r.kicker, text: r.summary, photo: r.photo }))
+        .map((r, i) => tile({ href: `/regions/${r.slug}/`, photo: r.photo, title: r.name.replace(/^The /, ""), kicker: r.kicker, index: i + 1, className: `mosaic-${i + 1}`, sizes: i < 2 ? "(min-width: 64em) 50vw, 100vw" : "(min-width: 64em) 33vw, (min-width: 40em) 50vw, 100vw" }))
         .join("")}
-    </ol>
+    </div>
   </div>
 </section>
 
-<section class="sec sec-dark coast-teaser" aria-labelledby="coast-title">
-  <div class="container">
+<section class="coast-teaser" aria-labelledby="coast-title">
+  <div class="coast-bg" aria-hidden="true">${img("7otLZRAeuQ8", { sizes: "100vw", alt: "" })}</div>
+  <div class="container coast-card sec-dark">
     ${sectionHead({ index: 3, label: "Signature tool", title: "Which coast, <em>which month?</em>", id: "coast-title", lede: "The south-east trade winds blow hardest from about June to August, making the east and south breezy while the west and north stay calm. In the hot summer months, the east's breeze is what you want." })}
-    <div class="coast-strip" data-reveal>
+    <div class="coast-strip">
       <table class="coast-strip-table">
         <caption class="visually-hidden">Calmest coast for each month</caption>
         <thead><tr><th scope="row" class="label">Month</th>${months.map((m) => `<th scope="col" class="label">${m.name.slice(0, 3)}</th>`).join("")}</tr></thead>
@@ -103,24 +103,25 @@ ${pageHero({
       </table>
       <p class="coast-strip-key label"><span class="c-north">N</span> North <span class="c-east">E</span> East <span class="c-west">W</span> West</p>
     </div>
-    <div class="coast-teaser-foot" data-reveal>
+    <div class="coast-teaser-foot">
       <p class="this-month" data-this-month hidden></p>
       <a class="pill pill-light" href="/when-to-go/">Open the coast chooser <span aria-hidden="true">→</span></a>
     </div>
   </div>
+  <p class="credit coast-credit">${credit("7otLZRAeuQ8")}</p>
 </section>
 
-<section class="sec day" aria-labelledby="day-title">
+<section class="sec day sec-coral" aria-labelledby="day-title">
   <div class="container day-grid">
     <div class="day-intro">
       ${sectionHead({ index: 4, label: "The street-food trail", title: "A day of eating <em>in Port Louis</em>", id: "day-title", lede: "Five dishes and four culinary roots, in the order you'd eat them." })}
-      <p class="day-clock display" aria-hidden="true">08:00</p>
+      <div class="day-photo">${img("Iiw8FxkZHfI", { ratio: 4 / 3, sizes: "(min-width: 64em) 40vw, 100vw" })}<p class="credit">${credit("Iiw8FxkZHfI")}</p></div>
       <a class="arrow-link" href="/food/#trail">Follow the full trail <span aria-hidden="true">→</span></a>
     </div>
     <ol class="day-list" role="list">
       ${trail
         .map(
-          (d, i) => `<li class="day-item" data-reveal>
+          (d, i) => `<li class="day-item">
         <span class="label day-time">${TRAIL_TIMES[i]}</span>
         <div>
           <h3 class="day-dish"><a href="/food/#${d.slug}">${d.name}</a></h3>
@@ -134,7 +135,7 @@ ${pageHero({
   </div>
 </section>
 
-<section class="split" aria-labelledby="name-title">
+<section class="split split-lagoon" aria-labelledby="name-title">
   <div class="split-media">${img("h2DBBDaFBbg", { ratio: 1, sizes: "(min-width: 64em) 50vw, 100vw" })}<p class="credit split-credit">${credit("h2DBBDaFBbg")}</p></div>
   <div class="split-panel">
     <p class="label">(05) The name</p>

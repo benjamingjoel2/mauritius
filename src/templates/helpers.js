@@ -20,21 +20,21 @@ function getPhoto(id) {
 
 // Unsplash serves resized images through imgix, so we never ship originals.
 function photoUrl(photo, width, ratio) {
-  let url = `${photo.raw}&w=${width}&q=70&auto=format`;
+  let url = `${photo.raw}&w=${width}&q=60&auto=format`;
   if (ratio) url += `&fit=crop&h=${Math.round(width / ratio)}`;
   return url;
 }
 
-const WIDTHS = [480, 800, 1200, 1600, 2000];
+const WIDTHS = [400, 640, 960, 1280, 1600, 1920];
 
 // <img> with srcset. `ratio` (width / height) crops; otherwise the photo's
 // own proportions are kept.
-function img(id, { sizes = "100vw", ratio, eager = false, className = "" } = {}) {
+function img(id, { sizes = "100vw", ratio, eager = false, className = "", alt } = {}) {
   const photo = getPhoto(id);
   const r = ratio || photo.width / photo.height;
   const srcset = WIDTHS.map((w) => `${photoUrl(photo, w, ratio)} ${w}w`).join(", ");
   return `<img src="${esc(photoUrl(photo, 1200, ratio))}" srcset="${esc(srcset)}" sizes="${esc(sizes)}"
-    width="1200" height="${Math.round(1200 / r)}" alt="${esc(photo.alt)}"
+    width="1200" height="${Math.round(1200 / r)}" alt="${esc(alt ?? photo.alt)}"
     ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"
     style="background-color:${esc(photo.color)}"${className ? ` class="${className}"` : ""}>`;
 }
@@ -65,4 +65,11 @@ function formatDate(iso) {
   });
 }
 
-module.exports = { esc, getPhoto, photoUrl, img, credit, figure, formatDate, shortLocation, UTM };
+// Attributes for <link rel="preload" as="image"> so the hero starts
+// downloading before the stylesheet is parsed.
+function preloadAttrs(id, sizes = "100vw") {
+  const photo = getPhoto(id);
+  return `imagesrcset="${esc(WIDTHS.map((w) => `${photoUrl(photo, w)} ${w}w`).join(", "))}" imagesizes="${sizes}"`;
+}
+
+module.exports = { preloadAttrs, esc, getPhoto, photoUrl, img, credit, figure, formatDate, shortLocation, UTM };

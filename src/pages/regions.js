@@ -1,7 +1,7 @@
 const regions = require("../content/regions");
 const stays = require("../content/stays");
 const { esc, figure } = require("../templates/helpers");
-const { pageHero, sectionHead, enquiryCta, indexRow, pad } = require("../templates/components");
+const { pageHero, sectionHead, enquiryCta, indexRow, tile, pad } = require("../templates/components");
 
 const shortName = (r) => r.name.replace(/^The /, "");
 
@@ -16,7 +16,12 @@ ${pageHero({
 <section class="sec" aria-labelledby="regions-list">
   <div class="container">
     ${sectionHead({ index: 1, label: "Six regions", title: "Choose your <em>side of the island</em>", id: "regions-list", link: { href: "/when-to-go/", text: "Which coast, which month?" } })}
-    <ol class="index-list" role="list">
+    <div class="mosaic">
+      ${regions
+        .map((r, i) => tile({ href: `/regions/${r.slug}/`, photo: r.photo, title: shortName(r), kicker: r.kicker, index: i + 1, text: r.summary, className: `mosaic-${i + 1}`, sizes: i < 2 ? "(min-width: 64em) 50vw, 100vw" : "(min-width: 64em) 33vw, (min-width: 40em) 50vw, 100vw" }))
+        .join("")}
+    </div>
+    <ol class="index-list index-list-after" role="list">
       ${regions
         .map((r, i) =>
           indexRow({
@@ -70,8 +75,8 @@ ${pageHero({
   <div class="container intro-grid">
     <p class="label"><span class="label-index">(01)</span> Overview</p>
     <div>
-      <p class="intro-big" data-reveal>${first}</p>
-      <div class="intro-body" data-reveal>
+      <p class="intro-big">${first}</p>
+      <div class="intro-body">
         ${rest.map((p) => `<p>${p}</p>`).join("")}
         ${region.photoNote ? `<p class="note">${region.photoNote}</p>` : ""}
       </div>
@@ -79,13 +84,13 @@ ${pageHero({
   </div>
 </section>
 
-<section class="sec sec-paper" aria-labelledby="hl-title">
+<section class="sec sec-lagoon on-color" aria-labelledby="hl-title">
   <div class="container">
     ${sectionHead({ index: 2, label: "Highlights", title: `What to see <em>and do</em>`, id: "hl-title" })}
     <ol class="rows" role="list">
       ${region.highlights
         .map(
-          (h, i) => `<li class="row" data-reveal>
+          (h, i) => `<li class="row">
         <span class="label row-num">${pad(i + 1)}</span>
         <h3 class="row-title">${h.title}</h3>
         <p class="row-text">${h.text}</p>

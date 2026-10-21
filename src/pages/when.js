@@ -125,9 +125,9 @@ ${pageHero({
     <div>
       ${sectionHead({ index: 3, label: "In short", title: "Two seasons, <em>three sweet spots</em>", id: "short-title" })}
       <ol class="rows rows-tight" role="list">
-        <li class="row" data-reveal><span class="label row-num">May–Oct</span><h3 class="row-title">Winter</h3><p class="row-text">Cooler, drier and windier. Stay west or north for calm lagoons and sunsets; go to Le Morne, Belle Mare or Rodrigues to kitesurf. The best hiking weather of the year.</p></li>
-        <li class="row" data-reveal><span class="label row-num">Nov–Apr</span><h3 class="row-title">Summer</h3><p class="row-text">Hot, humid and wetter, with the warmest sea. Lighter winds make the east coast's breeze a blessing. Cyclones are possible, most likely January to March: book flexible rates and good travel insurance.</p></li>
-        <li class="row" data-reveal><span class="label row-num">Apr–May, Sep–Nov</span><h3 class="row-title">Sweet spots</h3><p class="row-text">Warm sea, less rain, and most coasts calm. School holidays and Christmas are the busiest and most expensive times.</p></li>
+        <li class="row"><span class="label row-num">May–Oct</span><h3 class="row-title">Winter</h3><p class="row-text">Cooler, drier and windier. Stay west or north for calm lagoons and sunsets; go to Le Morne, Belle Mare or Rodrigues to kitesurf. The best hiking weather of the year.</p></li>
+        <li class="row"><span class="label row-num">Nov–Apr</span><h3 class="row-title">Summer</h3><p class="row-text">Hot, humid and wetter, with the warmest sea. Lighter winds make the east coast's breeze a blessing. Cyclones are possible, most likely January to March: book flexible rates and good travel insurance.</p></li>
+        <li class="row"><span class="label row-num">Apr–May, Sep–Nov</span><h3 class="row-title">Sweet spots</h3><p class="row-text">Warm sea, less rain, and most coasts calm. School holidays and Christmas are the busiest and most expensive times.</p></li>
       </ol>
     </div>
     ${figure("v6dBUEPJD4s", { sizes: "(min-width: 64em) 45vw, 100vw", ratio: 4 / 5, caption: "Fishing from the beach at Le Morne." })}

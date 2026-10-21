@@ -2,6 +2,9 @@ const things = require("../content/things");
 const { figure } = require("../templates/helpers");
 const { pageHero, enquiryCta, pad } = require("../templates/components");
 
+// Colour blocks per theme: lagoons in lagoon, the estates in Chamarel rust.
+const THEME_CLASS = { lagoons: "sec-lagoon on-color", "tea-and-rum": "sec-rust on-color", diving: "sec-paper" };
+
 module.exports = () => {
   const body = `
 ${pageHero({
@@ -19,10 +22,10 @@ ${pageHero({
 </nav>
 ${things
   .map(
-    (t, i) => `<section class="sec theme ${i % 2 ? "sec-paper" : ""}" id="${t.slug}" aria-labelledby="${t.slug}-title">
+    (t, i) => `<section class="sec theme ${THEME_CLASS[t.slug] || ""}" id="${t.slug}" aria-labelledby="${t.slug}-title">
   <div class="container">
     <div class="theme-head">
-      <div class="theme-intro" data-reveal>
+      <div class="theme-intro">
         <p class="label"><span class="label-index">(${pad(i + 1)})</span> Things to do</p>
         <h2 class="display theme-title" id="${t.slug}-title">${t.name}</h2>
         <p class="sec-lede">${t.intro}</p>
@@ -36,7 +39,7 @@ ${things
     <ol class="rows rows-4" role="list">
       ${t.items
         .map(
-          (item, n) => `<li class="row" data-reveal>
+          (item, n) => `<li class="row">
         <span class="label row-num">${pad(n + 1)}</span>
         <h3 class="row-title">${item.title}</h3>
         <p class="label row-meta"><span>${item.where}</span><span>${item.level}</span></p>

@@ -1,5 +1,5 @@
 const config = require("../../site.config");
-const { esc, getPhoto, photoUrl } = require("./helpers");
+const { esc, getPhoto, photoUrl, preloadAttrs } = require("./helpers");
 
 const NAV = [
   { href: "/regions/", label: "Regions" },
@@ -26,6 +26,8 @@ function layout({ path, title, description, body, ogPhoto, scripts = [], noindex
   const og = ogPhoto ? photoUrl(getPhoto(ogPhoto), 1200, 1200 / 630) : null;
   // Pages that open with a full-bleed photo get a transparent header over it.
   const overlay = /<header class="hero/.test(body);
+  // The first photo on a hero page is the largest paint: preload it.
+  const heroId = overlay ? (body.match(/<header class="hero[\s\S]*?data-photo="([^"]+)"/) || [])[1] : null;
 
   const current = (href) => (isCurrent(href, path) ? ' aria-current="page"' : "");
   const pad = (n) => String(n).padStart(2, "0");
@@ -46,6 +48,7 @@ ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" hr
 ${og ? `<meta property="og:image" content="${esc(og)}">\n<meta name="twitter:card" content="summary_large_image">` : ""}
 <meta name="theme-color" content="${config.palette.ink}">
 <link rel="preconnect" href="https://images.unsplash.com">
+${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority="high">` : ""}
 <link rel="preload" href="/fonts/InstrumentSerif-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/InterTight-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
