@@ -1,0 +1,3 @@
+# Mauritius
+
+Mauritius travel project.
