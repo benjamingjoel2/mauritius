@@ -1,0 +1,15 @@
+{
+  "name": "kreol-coast",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static travel website for Mauritius and Rodrigues.",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node scripts/serve.js",
+    "dev": "node build.js && node scripts/serve.js",
+    "check:contrast": "node scripts/contrast.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
