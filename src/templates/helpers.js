@@ -25,7 +25,9 @@ function photoUrl(photo, width, ratio) {
   return url;
 }
 
-const WIDTHS = [400, 640, 960, 1280, 1600, 1920];
+// 828 and 1100 match common phone widths (414px @2x, ~393px @2.75x) so phones
+// do not jump straight to a 1280px file.
+const WIDTHS = [400, 640, 828, 1100, 1280, 1600, 1920];
 
 // <img> with srcset. `ratio` (width / height) crops; otherwise the photo's
 // own proportions are kept.
