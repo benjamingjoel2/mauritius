@@ -87,7 +87,7 @@ function mapRuns(html, fn) {
     if (core && hasWords(core) && !/data-lang-link/.test(core)) {
       // Template-built blocks (tags separated only by whitespace, e.g. a card link wrapping
       // several spans) are translated text node by text node; prose is translated whole.
-      if (/>\s+</.test(core)) out += lead + core.replace(/>([^<]+)</g, (m, t) => (hasWords(t) ? '>' + t.replace(/^(\s*)([\s\S]*?)(\s*)$/, (x, a, b, c) => a + fn(b) + c) + '<' : m)) + trail;
+      if (/>\s+</.test(core)) out += lead + ('>' + core + '<').replace(/>([^<]+)</g, (m, t) => (hasWords(t) ? '>' + t.replace(/^(\s*)([\s\S]*?)(\s*)$/, (x, a, b, c) => a + fn(b) + c) + '<' : m)).slice(1, -1) + trail;
       else out += lead + fn(core) + trail;
     } else out += s;
     run = [];
