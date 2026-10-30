@@ -206,6 +206,16 @@ function build(root, { strict = false } = {}) {
       return s;
     };
     const prefix = (href) => (lang === 'en' ? href : `/${lang}${href}`);
+    // In scripts: translate a string literal, and point internal page paths ("/enquire/thanks/",
+    // '<a href="/beaches/#x">') at this language.
+    const scriptTr = (str) => {
+      let t = cfg.jsLiteral && !new RegExp(cfg.jsLiteral).test(str) ? str : tr(str, true);
+      if (lang !== 'en') {
+        if (/^\/[a-z][\w-]*(\/|\?|#)/.test(t) && !isAsset(t)) t = prefix(t);
+        t = t.replace(/href="(\/[a-z][^"]*)"/g, (m, h) => (isAsset(h) ? m : `href="${prefix(h)}"`));
+      }
+      return t;
+    };
     for (const f of pages) {
       let html = fs.readFileSync(f, 'utf8');
       const url = urlOf(f);
@@ -215,7 +225,7 @@ function build(root, { strict = false } = {}) {
         const toks = tokenize(html);
         html = toks.map((t) => {
           if (t.type === 'raw' && t.tag === 'script' && !/application\/ld\+json|speculationrules/.test(t.open)) {
-            return mapLiterals(t.v, (s) => (cfg.jsLiteral && !new RegExp(cfg.jsLiteral).test(s) ? s : tr(s, true)));
+            return mapLiterals(t.v, scriptTr);
           }
           if (t.type === 'raw' && t.tag === 'script' && /application\/ld\+json/.test(t.open)) {
             return mapLiterals(t.v, (s) => tr(s, true));
@@ -265,7 +275,7 @@ function build(root, { strict = false } = {}) {
         const src = fs.readFileSync(path.join(dist, s), 'utf8');
         const out = path.join(dist, lang, s);
         fs.mkdirSync(path.dirname(out), { recursive: true });
-        fs.writeFileSync(out, mapLiterals(src, (str) => (cfg.jsLiteral && !new RegExp(cfg.jsLiteral).test(str) ? str : tr(str, true))));
+        fs.writeFileSync(out, mapLiterals(src, scriptTr));
       }
     }
   }
