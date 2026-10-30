@@ -15,8 +15,13 @@ function isCurrent(href, path) {
   return path === href || (href !== "/" && path.startsWith(href));
 }
 
-function telHref(number) {
-  return `tel:${number.replace(/[^+\d]/g, "")}`;
+// Language selector. scripts/translate-site.cjs points each link at the same page in that
+// language and marks the current one; data-lang-link keeps the links out of the URL rewrite.
+const LANGS = [["en", "English"], ["fr", "Français"], ["de", "Deutsch"], ["es", "Español"]];
+function langSelect(cls) {
+  return `<nav class="lang-select label ${cls}" aria-label="Language"><ul role="list">${LANGS.map(
+    ([code, name]) => `<li><a href="/" data-lang-link="${code}" hreflang="${code}" lang="${code}" aria-label="${name}">${code.toUpperCase()}</a></li>`,
+  ).join("")}</ul></nav>`;
 }
 
 function layout({ path, title, description, body, ogPhoto, scripts = [], noindex = false }) {
@@ -66,6 +71,7 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
       <ul role="list">${NAV.map((item) => `<li><a href="${item.href}"${current(item.href)}>${item.label}</a></li>`).join("")}</ul>
     </nav>
     <div class="header-actions">
+      ${langSelect("lang-select-header")}
       <a class="pill pill-solid" href="/enquire/"${current("/enquire/")}>Plan a trip</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
         <span class="menu-toggle-label">Menu</span><span class="menu-toggle-icon" aria-hidden="true"></span>
@@ -80,7 +86,8 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
         .map((item, i) => `<li><a href="${item.href}"${current(item.href)}><span class="label">${pad(i + 1)}</span>${item.label}</a></li>`)
         .join("")}
     </ol>
-    <p class="menu-contact label"><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a> · <a href="${telHref(contact.phone)}">${esc(contact.phone)}</a></p>
+    ${langSelect("lang-select-menu")}
+    <p class="menu-contact label"><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></p>
   </nav>
 </div>
 <main id="main" tabindex="-1">
@@ -104,7 +111,6 @@ ${body}
         <h2 class="label footer-heading">Contact</h2>
         <ul class="footer-links" role="list">
           <li><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></li>
-          <li><a href="${telHref(contact.phone)}">${esc(contact.phone)}</a></li>
           <li>${esc(contact.address)}</li>
           <li>${esc(contact.hours)}</li>
         </ul>
@@ -113,7 +119,7 @@ ${body}
     <p class="footer-wordmark" aria-hidden="true">${esc(brand.name)}</p>
     <div class="footer-small label">
       <p>© ${new Date().getFullYear()} ${esc(brand.name)}</p>
-      <p>Photos from Unsplash, credited on each image · <a href="/credits/">Photo credits</a></p>
+      <p><a href="/privacy/">Privacy policy</a> · <a href="/booking-terms/">Booking terms</a> · <a href="/cookies/">Cookie policy</a></p>
       <p>20°10′S 57°31′E · Indian Ocean</p>
     </div>
   </div>
@@ -125,4 +131,4 @@ ${scripts.map((src) => `<script src="${src}" defer></script>`).join("\n")}
 `;
 }
 
-module.exports = { layout, telHref };
+module.exports = { layout };

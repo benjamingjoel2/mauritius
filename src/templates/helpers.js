@@ -25,7 +25,9 @@ function photoUrl(photo, width, ratio) {
   return url;
 }
 
-const WIDTHS = [400, 640, 960, 1280, 1600, 1920];
+// 828 and 1100 match common phone widths (414px @2x, ~393px @2.75x) so phones
+// do not jump straight to a 1280px file.
+const WIDTHS = [400, 640, 828, 1100, 1280, 1600, 1920];
 
 // <img> with srcset. `ratio` (width / height) crops; otherwise the photo's
 // own proportions are kept.
@@ -39,10 +41,11 @@ function img(id, { sizes = "100vw", ratio, eager = false, className = "", alt } 
     style="background-color:${esc(photo.color)}"${className ? ` class="${className}"` : ""}>`;
 }
 
-// Credit line in the form Unsplash asks for, plus the recorded location.
+// Caption line under a photo: its recorded location. The Unsplash licence does not
+// require attribution, so photographer credits are kept in photos.js only.
 function credit(id) {
   const photo = getPhoto(id);
-  return `Photo: <a href="https://unsplash.com/@${esc(photo.username)}?${UTM}">${esc(photo.author)}</a> on <a href="https://unsplash.com/?${UTM}">Unsplash</a> · ${esc(shortLocation(photo.location))}`;
+  return esc(shortLocation(photo.location));
 }
 
 function shortLocation(location) {

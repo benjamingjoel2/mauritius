@@ -11,7 +11,7 @@ const { months, calmPicks, coastNames } = require("./src/content/months");
 const OUT = path.join(__dirname, "dist");
 const ASSETS = path.join(__dirname, "src", "assets");
 
-const pageModules = ["home", "regions", "things", "food", "when", "other"];
+const pageModules = ["home", "regions", "things", "food", "when", "other", "legal"];
 
 function write(rel, content) {
   const file = path.join(OUT, rel);
@@ -36,6 +36,16 @@ function favicon() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="32" fill="${ink}"/><text x="32" y="40" font-family="Georgia,serif" font-size="24" fill="${sand}" text-anchor="middle">${config.brand.monogram}</text></svg>`;
 }
 
+// Light, safe CSS minification: drop comments and indentation/blank lines.
+function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .join("\n");
+}
+
 function build() {
   const failures = checkContrast(config);
   if (failures.length) {
@@ -51,7 +61,7 @@ function build() {
   const fontsDir = path.join(ASSETS, "fonts");
   write(
     "styles.css",
-    paletteCss() + fs.readFileSync(path.join(fontsDir, "fonts.css"), "utf8") + "\n" + fs.readFileSync(path.join(ASSETS, "styles.css"), "utf8"),
+    minifyCss(paletteCss() + fs.readFileSync(path.join(fontsDir, "fonts.css"), "utf8") + "\n" + fs.readFileSync(path.join(ASSETS, "styles.css"), "utf8")),
   );
   for (const file of fs.readdirSync(fontsDir)) {
     if (file.endsWith(".woff2")) write(path.join("fonts", file), fs.readFileSync(path.join(fontsDir, file)));
@@ -78,6 +88,9 @@ function build() {
   write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${config.siteUrl}/sitemap.xml\n`);
 
   console.log(`Built ${pages.length} pages into dist/`);
+
+  // French, German and Spanish copies of every page (dist/fr/, dist/de/, dist/es/), from i18n/<lang>.json.
+  require("./scripts/translate-site.cjs").build(__dirname, { strict: process.env.I18N_STRICT === "1" });
 }
 
 build();

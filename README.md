@@ -50,7 +50,7 @@ Content files are plain JavaScript objects: change the text between the quotes a
 Everything brand-specific is in `site.config.js`:
 
 - `brand.name`, `brand.monogram` (the letters in the round logo), `brand.tagline`, `brand.pitch`, `brand.nameStory`. A commented-out alternative for **Le Morne & Co.** is included.
-- `contact`: email, phone, WhatsApp, address and hours. **These are placeholders: replace them before launch.**
+- `contact`: email (`kreolcoast@tourground.com`), business address and hours. The site shows no phone number, WhatsApp or social links. **Confirm the street address before launch** (see Before launch).
 - `palette`: every colour on the site. The stylesheet only uses these as CSS variables (`var(--lagoon)` and so on), and the favicon is generated from them.
 - `siteUrl`: the production URL used for canonical links, the sitemap and social cards.
 
@@ -74,7 +74,7 @@ Rules for adding one:
 2. Add it to `src/content/photos.js` with its `raw` URL, size, photographer name and username, the recorded `location`, and your own descriptive `alt` text.
 3. Use it by id: `figure("id")`, `img("id")` or the `photo` field in content files. The build stops if an id is missing from `photos.js`.
 
-Every image is credited automatically next to the photo ("Photo: Name on Unsplash · Location") and on the `/credits/` page.
+The Unsplash licence does not require attribution, so captions show only the recorded location; photographer details stay in `src/content/photos.js`. If a Creative Commons image is ever added, it must be credited (bring back a credits page for those images only).
 
 The central plateau page uses a photo from Black River Gorges National Park (on the plateau's south-western edge) and says so in a caption. The tea and rum section has no photo, because no Unsplash photo with a matching recorded location turned up; it uses a Chamarel-earth colour panel instead.
 
@@ -100,6 +100,28 @@ The look follows editorial travel sites: oversized serif display type over full-
 - Three self-hosted font files are preloaded (about 85 KB in total); one stylesheet and a few kilobytes of script on the pages that need it.
 - Responsive images with `srcset`; only the hero image loads eagerly.
 - The site was checked with axe-core (WCAG 2.1 AA rules) at phone and desktop widths. White hero text sits on a dark gradient over the photo; automated tools can't measure contrast over images, so check new hero photos by eye.
+
+## Languages
+
+The site is in English (default, at the current URLs), French (`/fr/`), German (`/de/`) and Spanish (`/es/`). Every page is pre-rendered in each language; there is no translation code in the browser.
+
+- `npm run build` builds the English site, then `scripts/translate-site.cjs` writes `dist/fr/`, `dist/de/` and `dist/es/` from the dictionaries in `i18n/<lang>.json` (English text → translation). It translates page text, alt/aria/meta text and the strings in the page scripts (coast chooser, enquiry form), rewrites internal links to the same language, sets `<html lang>`, canonical and `hreflang` (en, fr, de, es, x-default) and lists every language in the sitemap.
+- The legal pages are written in all four languages in `src/content/legal.js`; `i18n/extra.cjs` turns them into dictionary entries automatically.
+- **When you change English copy:** run `node build.js` then `node scripts/translate-site.cjs extract`. That writes every translatable string to `i18n/strings.en.json`, and the build prints any string that has no translation yet. Add it to the three `i18n/<lang>.json` files. `I18N_STRICT=1 node build.js` fails the build on missing strings.
+- The language selector (EN · FR · DE · ES) is in the header on desktop and in the menu on small screens.
+- Settings (site URL, languages, which scripts carry text) are in `i18n/config.json`.
+- Have native speakers review the French, German and Spanish copy before launch.
+
+## Legal pages
+
+`/privacy/`, `/booking-terms/` and `/cookies/` are built by `src/pages/legal.js` from the copy in `src/content/legal.js`, using the brand name, email and address in `site.config.js`. The site stores nothing in the browser; if you add analytics or local storage, list it in the cookie policy. Have a lawyer review all three before launch.
+
+## Before launch
+
+- Confirm the business address in `site.config.js` (`contact.address` is city-level only for now).
+- Set up the `kreolcoast@tourground.com` mailbox and point `kreolcoast.tourground.com` at the Vercel project.
+- Replace the `[Placeholder]` stays and request images for them (`IMAGES-NEEDED.md`).
+- Work through `FACTS-TO-VERIFY.md`, have a lawyer review the legal pages and native speakers the FR/DE/ES copy.
 
 ## Project layout
 
