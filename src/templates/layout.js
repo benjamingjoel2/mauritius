@@ -15,10 +15,6 @@ function isCurrent(href, path) {
   return path === href || (href !== "/" && path.startsWith(href));
 }
 
-function telHref(number) {
-  return `tel:${number.replace(/[^+\d]/g, "")}`;
-}
-
 function layout({ path, title, description, body, ogPhoto, scripts = [], noindex = false }) {
   const { brand, contact, siteUrl } = config;
   const fullTitle = path === "/" ? `${brand.name}: ${brand.tagline}` : `${title} | ${brand.name}`;
@@ -80,7 +76,7 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
         .map((item, i) => `<li><a href="${item.href}"${current(item.href)}><span class="label">${pad(i + 1)}</span>${item.label}</a></li>`)
         .join("")}
     </ol>
-    <p class="menu-contact label"><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a> · <a href="${telHref(contact.phone)}">${esc(contact.phone)}</a></p>
+    <p class="menu-contact label"><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></p>
   </nav>
 </div>
 <main id="main" tabindex="-1">
@@ -104,7 +100,6 @@ ${body}
         <h2 class="label footer-heading">Contact</h2>
         <ul class="footer-links" role="list">
           <li><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></li>
-          <li><a href="${telHref(contact.phone)}">${esc(contact.phone)}</a></li>
           <li>${esc(contact.address)}</li>
           <li>${esc(contact.hours)}</li>
         </ul>
@@ -113,7 +108,7 @@ ${body}
     <p class="footer-wordmark" aria-hidden="true">${esc(brand.name)}</p>
     <div class="footer-small label">
       <p>© ${new Date().getFullYear()} ${esc(brand.name)}</p>
-      <p>Photos from Unsplash, credited on each image · <a href="/credits/">Photo credits</a></p>
+      <p><a href="/privacy/">Privacy policy</a> · <a href="/booking-terms/">Booking terms</a> · <a href="/cookies/">Cookie policy</a></p>
       <p>20°10′S 57°31′E · Indian Ocean</p>
     </div>
   </div>
@@ -125,4 +120,4 @@ ${scripts.map((src) => `<script src="${src}" defer></script>`).join("\n")}
 `;
 }
 
-module.exports = { layout, telHref };
+module.exports = { layout };

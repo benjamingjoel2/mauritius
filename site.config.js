@@ -30,14 +30,14 @@ module.exports = {
 
   // Public URL of the deployed site, used for canonical links, the sitemap and
   // social cards. No trailing slash.
-  siteUrl: "https://kreol-coast.vercel.app",
+  siteUrl: "https://kreolcoast.tourground.com",
 
-  // PLACEHOLDER contact details. Replace before launch.
+  // Contact details. One email per brand, in the owner's format {brandname}@tourground.com.
+  // TODO(owner): replace the address with the coworking-space street address once confirmed
+  // (it could not be verified from the build environment; see the PR).
   contact: {
-    email: "hello@example.com",
-    phone: "+230 5000 0000",
-    whatsapp: "+230 5000 0000",
-    address: "Placeholder address, Port Louis, Mauritius",
+    email: "kreolcoast@tourground.com",
+    address: "Port Louis, Mauritius",
     hours: "Monday to Friday, 9:00 to 17:00 Mauritius time (UTC+4)",
   },
 

@@ -11,7 +11,7 @@ const { months, calmPicks, coastNames } = require("./src/content/months");
 const OUT = path.join(__dirname, "dist");
 const ASSETS = path.join(__dirname, "src", "assets");
 
-const pageModules = ["home", "regions", "things", "food", "when", "other"];
+const pageModules = ["home", "regions", "things", "food", "when", "other", "legal"];
 
 function write(rel, content) {
   const file = path.join(OUT, rel);

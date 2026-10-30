@@ -50,7 +50,7 @@ Content files are plain JavaScript objects: change the text between the quotes a
 Everything brand-specific is in `site.config.js`:
 
 - `brand.name`, `brand.monogram` (the letters in the round logo), `brand.tagline`, `brand.pitch`, `brand.nameStory`. A commented-out alternative for **Le Morne & Co.** is included.
-- `contact`: email, phone, WhatsApp, address and hours. **These are placeholders: replace them before launch.**
+- `contact`: email (`kreolcoast@tourground.com`), business address and hours. The site shows no phone number, WhatsApp or social links. **Confirm the street address before launch** (see Before launch).
 - `palette`: every colour on the site. The stylesheet only uses these as CSS variables (`var(--lagoon)` and so on), and the favicon is generated from them.
 - `siteUrl`: the production URL used for canonical links, the sitemap and social cards.
 
@@ -74,7 +74,7 @@ Rules for adding one:
 2. Add it to `src/content/photos.js` with its `raw` URL, size, photographer name and username, the recorded `location`, and your own descriptive `alt` text.
 3. Use it by id: `figure("id")`, `img("id")` or the `photo` field in content files. The build stops if an id is missing from `photos.js`.
 
-Every image is credited automatically next to the photo ("Photo: Name on Unsplash · Location") and on the `/credits/` page.
+The Unsplash licence does not require attribution, so captions show only the recorded location; photographer details stay in `src/content/photos.js`. If a Creative Commons image is ever added, it must be credited (bring back a credits page for those images only).
 
 The central plateau page uses a photo from Black River Gorges National Park (on the plateau's south-western edge) and says so in a caption. The tea and rum section has no photo, because no Unsplash photo with a matching recorded location turned up; it uses a Chamarel-earth colour panel instead.
 
@@ -100,6 +100,17 @@ The look follows editorial travel sites: oversized serif display type over full-
 - Three self-hosted font files are preloaded (about 85 KB in total); one stylesheet and a few kilobytes of script on the pages that need it.
 - Responsive images with `srcset`; only the hero image loads eagerly.
 - The site was checked with axe-core (WCAG 2.1 AA rules) at phone and desktop widths. White hero text sits on a dark gradient over the photo; automated tools can't measure contrast over images, so check new hero photos by eye.
+
+## Legal pages
+
+`/privacy/`, `/booking-terms/` and `/cookies/` are built by `src/pages/legal.js` from the copy in `src/content/legal.js`, using the brand name, email and address in `site.config.js`. The site stores nothing in the browser; if you add analytics or local storage, list it in the cookie policy. Have a lawyer review all three before launch.
+
+## Before launch
+
+- Confirm the business address in `site.config.js` (`contact.address` is city-level only for now).
+- Set up the `kreolcoast@tourground.com` mailbox and point `kreolcoast.tourground.com` at the Vercel project.
+- Replace the `[Placeholder]` stays and request images for them (`IMAGES-NEEDED.md`).
+- Work through `FACTS-TO-VERIFY.md` and have a lawyer review the legal pages.
 
 ## Project layout
 

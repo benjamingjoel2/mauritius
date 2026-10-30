@@ -5,15 +5,12 @@ const journal = require("../content/journal");
 const photos = require("../content/photos");
 const { esc, figure, formatDate, credit, img } = require("../templates/helpers");
 const { pageHero, sectionHead, enquiryCta, card, pad } = require("../templates/components");
-const { telHref } = require("../templates/layout");
 
 const regionName = (slug) => regions.find((r) => r.slug === slug).name;
 
-function contactList(contact, { whatsapp = true } = {}) {
+function contactList(contact) {
   return `<dl class="contact-list">
     <div><dt class="label">Email</dt><dd><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></dd></div>
-    <div><dt class="label">Phone</dt><dd><a href="${telHref(contact.phone)}">${esc(contact.phone)}</a></dd></div>
-    ${whatsapp ? `<div><dt class="label">WhatsApp</dt><dd>${esc(contact.whatsapp)}</dd></div>` : ""}
     <div><dt class="label">Address</dt><dd>${esc(contact.address)}</dd></div>
     <div><dt class="label">Hours</dt><dd>${esc(contact.hours)}</dd></div>
   </dl>`;
@@ -86,7 +83,7 @@ ${pageHero({
       <li class="row"><span class="label row-num">01</span><h3 class="row-title">Local first</h3><p class="row-text">Smaller, locally owned places to stay where we can.</p></li>
       <li class="row"><span class="label row-num">02</span><h3 class="row-title">By the rules</h3><p class="row-text">Guides and boat operators who follow the rules on marine parks, dolphins and whales.</p></li>
       <li class="row"><span class="label row-num">03</span><h3 class="row-title">Honest weather</h3><p class="row-text">Straight advice on the seasons, including when not to go somewhere.</p></li>
-      <li class="row"><span class="label row-num">04</span><h3 class="row-title">Real photos</h3><p class="row-text">Every photo comes from Unsplash, is credited, and is only used where its recorded location matches the place described. <a href="/credits/">See all credits</a>.</p></li>
+      <li class="row"><span class="label row-num">04</span><h3 class="row-title">Real photos</h3><p class="row-text">Every photo is only used where its recorded location matches the place described.</p></li>
     </ol>
   </div>
 </section>
@@ -202,7 +199,7 @@ ${pageHero({
             <input id="email" name="email" type="email" autocomplete="email" required>
           </div>
           <div class="field">
-            <label for="phone">Phone or WhatsApp <span class="optional">(optional)</span></label>
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
             <input id="phone" name="phone" type="tel" autocomplete="tel">
           </div>
         </div>
@@ -307,33 +304,6 @@ ${pageHero({
   ];
 }
 
-function creditsPage() {
-  const list = Object.values(photos).sort((a, b) => a.location.localeCompare(b.location));
-  const body = `
-${pageHero({
-  kicker: "Credits",
-  title: "Photo <em>credits</em>",
-  lede: "All photos come from Unsplash. We only use a photo where the location its photographer recorded on Unsplash matches the place it illustrates.",
-})}
-<section class="sec sec-tight">
-  <div class="container">
-    <ol class="credits-grid" role="list">
-      ${list
-        .map(
-          (p, i) => `<li>
-        ${img(p.id, { ratio: 4 / 5, sizes: "(min-width: 64em) 22vw, (min-width: 40em) 45vw, 100vw" })}
-        <p class="label credit-index">${pad(i + 1)}</p>
-        <p class="credit-place">${esc(p.location)}</p>
-        <p class="credit">${credit(p.id)} · <a href="${esc(p.page)}">View on Unsplash</a></p>
-      </li>`,
-        )
-        .join("")}
-    </ol>
-  </div>
-</section>`;
-  return { path: "/credits/", title: "Photo credits", description: "Credits for the Unsplash photos used on this site.", body };
-}
-
 function notFoundPage() {
   return {
     path: "/404",
@@ -350,4 +320,4 @@ ${pageHero({
   };
 }
 
-module.exports = () => [staysPage(), aboutPage(), ...journalPages(), ...enquirePage(), creditsPage(), notFoundPage()];
+module.exports = () => [staysPage(), aboutPage(), ...journalPages(), ...enquirePage(), notFoundPage()];

@@ -41,10 +41,11 @@ function img(id, { sizes = "100vw", ratio, eager = false, className = "", alt } 
     style="background-color:${esc(photo.color)}"${className ? ` class="${className}"` : ""}>`;
 }
 
-// Credit line in the form Unsplash asks for, plus the recorded location.
+// Caption line under a photo: its recorded location. The Unsplash licence does not
+// require attribution, so photographer credits are kept in photos.js only.
 function credit(id) {
   const photo = getPhoto(id);
-  return `Photo: <a href="https://unsplash.com/@${esc(photo.username)}?${UTM}">${esc(photo.author)}</a> on <a href="https://unsplash.com/?${UTM}">Unsplash</a> · ${esc(shortLocation(photo.location))}`;
+  return esc(shortLocation(photo.location));
 }
 
 function shortLocation(location) {
