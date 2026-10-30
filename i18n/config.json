@@ -1,0 +1,10 @@
+{
+  "dist": "dist",
+  "siteUrl": "https://kreolcoast.tourground.com",
+  "locales": ["fr", "de", "es"],
+  "ogLocales": { "en": "en_GB", "fr": "fr_FR", "de": "de_DE", "es": "es_ES" },
+  "assetPrefixes": ["/fonts/"],
+  "scripts": ["coast-data.js", "chooser.js", "enquiry.js", "this-month.js", "site.js"],
+  "jsLiteral": "\\s|^[A-Z][a-z]",
+  "skip": []
+}

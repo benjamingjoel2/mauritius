@@ -101,6 +101,17 @@ The look follows editorial travel sites: oversized serif display type over full-
 - Responsive images with `srcset`; only the hero image loads eagerly.
 - The site was checked with axe-core (WCAG 2.1 AA rules) at phone and desktop widths. White hero text sits on a dark gradient over the photo; automated tools can't measure contrast over images, so check new hero photos by eye.
 
+## Languages
+
+The site is in English (default, at the current URLs), French (`/fr/`), German (`/de/`) and Spanish (`/es/`). Every page is pre-rendered in each language; there is no translation code in the browser.
+
+- `npm run build` builds the English site, then `scripts/translate-site.cjs` writes `dist/fr/`, `dist/de/` and `dist/es/` from the dictionaries in `i18n/<lang>.json` (English text → translation). It translates page text, alt/aria/meta text and the strings in the page scripts (coast chooser, enquiry form), rewrites internal links to the same language, sets `<html lang>`, canonical and `hreflang` (en, fr, de, es, x-default) and lists every language in the sitemap.
+- The legal pages are written in all four languages in `src/content/legal.js`; `i18n/extra.cjs` turns them into dictionary entries automatically.
+- **When you change English copy:** run `node build.js` then `node scripts/translate-site.cjs extract`. That writes every translatable string to `i18n/strings.en.json`, and the build prints any string that has no translation yet. Add it to the three `i18n/<lang>.json` files. `I18N_STRICT=1 node build.js` fails the build on missing strings.
+- The language selector (EN · FR · DE · ES) is in the header on desktop and in the menu on small screens.
+- Settings (site URL, languages, which scripts carry text) are in `i18n/config.json`.
+- Have native speakers review the French, German and Spanish copy before launch.
+
 ## Legal pages
 
 `/privacy/`, `/booking-terms/` and `/cookies/` are built by `src/pages/legal.js` from the copy in `src/content/legal.js`, using the brand name, email and address in `site.config.js`. The site stores nothing in the browser; if you add analytics or local storage, list it in the cookie policy. Have a lawyer review all three before launch.
@@ -110,7 +121,7 @@ The look follows editorial travel sites: oversized serif display type over full-
 - Confirm the business address in `site.config.js` (`contact.address` is city-level only for now).
 - Set up the `kreolcoast@tourground.com` mailbox and point `kreolcoast.tourground.com` at the Vercel project.
 - Replace the `[Placeholder]` stays and request images for them (`IMAGES-NEEDED.md`).
-- Work through `FACTS-TO-VERIFY.md` and have a lawyer review the legal pages.
+- Work through `FACTS-TO-VERIFY.md`, have a lawyer review the legal pages and native speakers the FR/DE/ES copy.
 
 ## Project layout
 

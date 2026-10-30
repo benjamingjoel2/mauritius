@@ -15,6 +15,15 @@ function isCurrent(href, path) {
   return path === href || (href !== "/" && path.startsWith(href));
 }
 
+// Language selector. scripts/translate-site.cjs points each link at the same page in that
+// language and marks the current one; data-lang-link keeps the links out of the URL rewrite.
+const LANGS = [["en", "English"], ["fr", "Français"], ["de", "Deutsch"], ["es", "Español"]];
+function langSelect(cls) {
+  return `<nav class="lang-select label ${cls}" aria-label="Language"><ul role="list">${LANGS.map(
+    ([code, name]) => `<li><a href="/" data-lang-link="${code}" hreflang="${code}" lang="${code}" aria-label="${name}">${code.toUpperCase()}</a></li>`,
+  ).join("")}</ul></nav>`;
+}
+
 function layout({ path, title, description, body, ogPhoto, scripts = [], noindex = false }) {
   const { brand, contact, siteUrl } = config;
   const fullTitle = path === "/" ? `${brand.name}: ${brand.tagline}` : `${title} | ${brand.name}`;
@@ -62,6 +71,7 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
       <ul role="list">${NAV.map((item) => `<li><a href="${item.href}"${current(item.href)}>${item.label}</a></li>`).join("")}</ul>
     </nav>
     <div class="header-actions">
+      ${langSelect("lang-select-header")}
       <a class="pill pill-solid" href="/enquire/"${current("/enquire/")}>Plan a trip</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
         <span class="menu-toggle-label">Menu</span><span class="menu-toggle-icon" aria-hidden="true"></span>
@@ -76,6 +86,7 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
         .map((item, i) => `<li><a href="${item.href}"${current(item.href)}><span class="label">${pad(i + 1)}</span>${item.label}</a></li>`)
         .join("")}
     </ol>
+    ${langSelect("lang-select-menu")}
     <p class="menu-contact label"><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></p>
   </nav>
 </div>

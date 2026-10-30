@@ -88,6 +88,9 @@ function build() {
   write("robots.txt", `User-agent: *\nAllow: /\nSitemap: ${config.siteUrl}/sitemap.xml\n`);
 
   console.log(`Built ${pages.length} pages into dist/`);
+
+  // French, German and Spanish copies of every page (dist/fr/, dist/de/, dist/es/), from i18n/<lang>.json.
+  require("./scripts/translate-site.cjs").build(__dirname, { strict: process.env.I18N_STRICT === "1" });
 }
 
 build();
