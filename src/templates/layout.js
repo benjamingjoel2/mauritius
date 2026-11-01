@@ -24,12 +24,20 @@ function langSelect(cls) {
   ).join("")}</ul></nav>`;
 }
 
+// Two-tone wordmark: the last word of the brand name in coral.
+function logoName(name) {
+  const words = esc(name).split(" ");
+  if (words.length < 2) return words[0];
+  const last = words.pop();
+  return `${words.join(" ")}<span class="logo-accent">${last}</span>`;
+}
+
 function layout({ path, title, description, body, ogPhoto, scripts = [], noindex = false }) {
   const { brand, contact, siteUrl } = config;
   const fullTitle = path === "/" ? `${brand.name}: ${brand.tagline}` : `${title} | ${brand.name}`;
   const desc = description || brand.pitch;
   const og = ogPhoto ? photoUrl(getPhoto(ogPhoto), 1200, 1200 / 630) : null;
-  // Pages that open with a full-bleed photo get a transparent header over it.
+  // Pages that open with a photo hero preload that photo.
   const overlay = /<header class="hero/.test(body);
   // The first photo on a hero page is the largest paint: preload it.
   const heroId = overlay ? (body.match(/<header class="hero[\s\S]*?data-photo="([^"]+)"/) || [])[1] : null;
@@ -53,19 +61,18 @@ ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" hr
 ${og ? `<meta property="og:image" content="${esc(og)}">\n<meta name="twitter:card" content="summary_large_image">` : ""}
 <meta name="theme-color" content="${config.palette.ink}">
 <link rel="preconnect" href="https://images.unsplash.com">
-${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority="high">` : ""}
-<link rel="preload" href="/fonts/InstrumentSerif-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/InterTight-var.woff2" as="font" type="font/woff2" crossorigin>
+${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId, "(min-width: 64em) 55vw, 100vw")} fetchpriority="high">` : ""}
+<link rel="preload" href="/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="${overlay ? "has-hero" : "no-hero"}">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header${overlay ? " is-overlay" : ""}" data-header>
+<header class="site-header" data-header>
   <div class="container header-inner">
     <a class="logo" href="/" aria-label="${esc(brand.name)}, home">
-      <span class="logo-mark" aria-hidden="true">${esc(brand.monogram)}</span>
-      <span class="logo-name">${esc(brand.name)}</span>
+      <span class="logo-name">${logoName(brand.name)}</span>
     </a>
     <nav class="desktop-nav" aria-label="Main">
       <ul role="list">${NAV.map((item) => `<li><a href="${item.href}"${current(item.href)}>${item.label}</a></li>`).join("")}</ul>

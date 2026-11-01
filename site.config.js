@@ -52,17 +52,19 @@ module.exports = {
   palette: {
     lagoon: "#0B6670", // deep lagoon: links, primary buttons
     lagoonBright: "#5ED1C8", // shallow lagoon: highlights on dark
-    lagoonMist: "#DCEDEA", // lagoon tint: soft panels
+    lagoonMist: "#E6F6F4", // lagoon tint: soft panels
+    tint: "#F3FAF9", // faint lagoon wash: alternate sections
     cane: "#3B6421", // sugar-cane leaf
     caneLight: "#C3D98E", // young cane
     rust: "#9A3B19", // Chamarel red earth
     violet: "#5B3B7C", // Chamarel violet earth
     ochre: "#E2A93F", // Chamarel ochre earth
-    coral: "#F08066", // coral
-    sand: "#F3EEE4", // white sand: page background
-    sandDeep: "#E8DFCF", // wet sand: alternate panels
+    coral: "#F0775B", // coral: main call-to-action buttons
+    sun: "#FFD27A", // sunshine yellow: highlights on lagoon
+    sand: "#FFFFFF", // white sand: page background
+    sandDeep: "#F6F2EA", // warm sand: alternate panels
     ink: "#11201F", // body text and dark sections (lagoon at night)
-    inkSoft: "#47534F", // secondary text
+    inkSoft: "#46585B", // secondary text
     fog: "#AEB9B4", // secondary text on dark sections
     white: "#FFFFFF",
   },
@@ -102,5 +104,10 @@ module.exports = {
     ["caneLight", "ink"],
     ["coral", "ink"],
     ["fog", "ink"],
+    ["sun", "lagoon"],
+    ["ink", "sun"],
+    ["ink", "tint"],
+    ["inkSoft", "tint"],
+    ["lagoon", "tint"],
   ],
 };

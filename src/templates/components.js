@@ -3,8 +3,8 @@ const { esc, img, credit, getPhoto, shortLocation } = require("./helpers");
 
 const pad = (n) => String(n).padStart(2, "0");
 
-// Full-bleed photo hero with oversized type. Without a photo, a plain
-// editorial page head on sand.
+// Page hero: headline and intro beside a large rounded photo. Without a
+// photo, a plain page head on a soft lagoon wash.
 function pageHero({ kicker, title, lede, photo, eager = true, meta = [], actions = "", size = "" }) {
   if (!photo) {
     return `<header class="page-head">
@@ -19,20 +19,21 @@ function pageHero({ kicker, title, lede, photo, eager = true, meta = [], actions
   const where = shortLocation(getPhoto(photo).location);
   const metaItems = meta.length ? meta : [where];
   return `<header class="hero ${size}" data-photo="${photo}">
-  <div class="hero-media">${img(photo, { eager, sizes: "100vw" })}</div>
-  <div class="hero-scrim" aria-hidden="true"></div>
-  <div class="container hero-content">
-    <div class="hero-meta label">
-      ${kicker ? `<span>${kicker}</span>` : ""}
-      ${metaItems.map((m) => `<span>${m}</span>`).join("")}
-    </div>
-    <h1 class="display hero-title">${title}</h1>
-    <div class="hero-foot">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-meta label">
+        ${kicker ? `<span>${kicker}</span>` : ""}
+        ${metaItems.map((m) => `<span>${m}</span>`).join("")}
+      </div>
+      <h1 class="display hero-title">${title}</h1>
       ${lede ? `<p class="lede hero-lede">${lede}</p>` : ""}
       ${actions}
     </div>
+    <figure class="hero-figure">
+      <div class="hero-media">${img(photo, { eager, sizes: "(min-width: 64em) 55vw, 100vw" })}</div>
+      <figcaption class="hero-credit">${credit(photo)}</figcaption>
+    </figure>
   </div>
-  <p class="hero-credit label">${credit(photo)}</p>
 </header>`;
 }
 
@@ -48,15 +49,17 @@ function sectionHead({ index, label, title, link, lede, id }) {
 </div>`;
 }
 
-function enquiryCta(text = "Tell us what you love doing and when you can travel. We'll suggest a route that fits.", photo = "WV4B_aVj0aQ") {
-  return `<section class="cta" aria-labelledby="cta-title">
-  <div class="cta-media" aria-hidden="true">${img(photo, { sizes: "100vw", alt: "" })}</div>
-  <div class="container cta-inner">
-    <p class="label">Plan with ${esc(config.brand.name)}</p>
-    <h2 class="display cta-title" id="cta-title"><a href="/enquire/">Start planning <span class="cta-arrow" aria-hidden="true">→</span></a></h2>
-    <p class="cta-text">${text}</p>
+function enquiryCta(text = "Tell us what you love doing and when you can travel. We'll suggest a route that fits.") {
+  return `<section class="cta-wrap" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta">
+      <div class="cta-inner">
+        <p class="label">Plan with ${esc(config.brand.name)}</p>
+        <h2 class="display cta-title" id="cta-title"><a href="/enquire/">Start planning <span class="cta-arrow" aria-hidden="true">→</span></a></h2>
+        <p class="cta-text">${text}</p>
+      </div>
+    </div>
   </div>
-  <p class="credit cta-credit">${credit(photo)}</p>
 </section>`;
 }
 

@@ -49,9 +49,12 @@ ${pageHero({
   size: "hero-xl",
   meta: ["Le Morne Brabant", "20°27′S 57°19′E"],
   actions: `<div class="hero-actions">
-    <a class="pill pill-light" href="/enquire/">Plan a trip <span aria-hidden="true">→</span></a>
-    <a class="pill pill-ghost" href="/when-to-go/">Which coast, which month?</a>
-  </div>`,
+    <a class="btn btn-coral" href="/enquire/">Plan a trip <span aria-hidden="true">→</span></a>
+    <a class="btn btn-soft" href="/when-to-go/">Which coast, which month?</a>
+  </div>
+  <ul class="topic-pills" role="list">
+    ${PILLARS.map((p, i) => `<li class="topic topic-${i + 1}"><a href="${p.href}">${p.title}</a></li>`).join("")}
+  </ul>`,
 })}
 
 <section class="sec pillars-sec" aria-labelledby="pillars-title">
@@ -89,9 +92,9 @@ ${pageHero({
   </div>
 </section>
 
-<section class="coast-teaser" aria-labelledby="coast-title">
-  <div class="coast-bg" aria-hidden="true">${img("7otLZRAeuQ8", { sizes: "100vw", alt: "" })}</div>
-  <div class="container coast-card sec-dark">
+<section class="sec coast-teaser" aria-labelledby="coast-title">
+  <div class="container">
+  <div class="coast-card">
     ${sectionHead({ index: 3, label: "Signature tool", title: "Which coast, <em>which month?</em>", id: "coast-title", lede: "The south-east trade winds blow hardest from about June to August, making the east and south breezy while the west and north stay calm. In the hot summer months, the east's breeze is what you want." })}
     <div class="coast-strip">
       <table class="coast-strip-table">
@@ -105,14 +108,15 @@ ${pageHero({
     </div>
     <div class="coast-teaser-foot">
       <p class="this-month" data-this-month hidden></p>
-      <a class="pill pill-light" href="/when-to-go/">Open the coast chooser <span aria-hidden="true">→</span></a>
+      <a class="btn btn-coral" href="/when-to-go/">Open the coast chooser <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <p class="credit coast-credit">${credit("7otLZRAeuQ8")}</p>
+  </div>
 </section>
 
-<section class="sec day sec-coral" aria-labelledby="day-title">
-  <div class="container day-grid">
+<section class="sec day" aria-labelledby="day-title">
+  <div class="container">
+  <div class="day-panel day-grid">
     <div class="day-intro">
       ${sectionHead({ index: 4, label: "The street-food trail", title: "A day of eating <em>in Port Louis</em>", id: "day-title", lede: "Five dishes and four culinary roots, in the order you'd eat them." })}
       <div class="day-photo">${img("Iiw8FxkZHfI", { ratio: 4 / 3, sizes: "(min-width: 64em) 40vw, 100vw" })}<p class="credit">${credit("Iiw8FxkZHfI")}</p></div>
@@ -133,9 +137,11 @@ ${pageHero({
         .join("")}
     </ol>
   </div>
+  </div>
 </section>
 
-<section class="split split-lagoon" aria-labelledby="name-title">
+<section class="sec split-sec" aria-labelledby="name-title">
+<div class="container split split-lagoon">
   <div class="split-media">${img("h2DBBDaFBbg", { ratio: 1, sizes: "(min-width: 64em) 50vw, 100vw" })}<p class="credit split-credit">${credit("h2DBBDaFBbg")}</p></div>
   <div class="split-panel">
     <p class="label">(05) The name</p>
@@ -143,6 +149,7 @@ ${pageHero({
     <p>${esc(config.brand.nameStory)}</p>
     <a class="arrow-link" href="/about/">About us <span aria-hidden="true">→</span></a>
   </div>
+</div>
 </section>
 
 <section class="sec" aria-labelledby="journal-title">
