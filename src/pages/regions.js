@@ -21,21 +21,6 @@ ${pageHero({
         .map((r, i) => tile({ href: `/regions/${r.slug}/`, photo: r.photo, title: shortName(r), kicker: r.kicker, index: i + 1, text: r.summary, className: `mosaic-${i + 1}`, sizes: i < 2 ? "(min-width: 64em) 50vw, 100vw" : "(min-width: 64em) 33vw, (min-width: 40em) 50vw, 100vw" }))
         .join("")}
     </div>
-    <ol class="index-list index-list-after" role="list">
-      ${regions
-        .map((r, i) =>
-          indexRow({
-            href: `/regions/${r.slug}/`,
-            index: i + 1,
-            title: shortName(r),
-            kicker: r.kicker,
-            text: r.summary,
-            aside: `Calmest: ${esc(r.calmMonths)}`,
-            photo: r.photo,
-          }),
-        )
-        .join("")}
-    </ol>
   </div>
 </section>
 ${enquiryCta()}`;
