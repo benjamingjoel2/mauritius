@@ -33,11 +33,10 @@ module.exports = {
   siteUrl: "https://kreolcoast.tourground.com",
 
   // Contact details. One email per brand, in the owner's format {brandname}@tourground.com.
-  // TODO(owner): replace the address with the coworking-space street address once confirmed
-  // (it could not be verified from the build environment; see the PR).
+  // Address: Regus Nexsky Building in Ebène Cybercity, the island's business district.
   contact: {
     email: "kreolcoast@tourground.com",
-    address: "Port Louis, Mauritius",
+    address: "Regus Nexsky Building, 7th Floor, Hotel Street, Cybercity, Ebène 72201, Mauritius",
     hours: "Monday to Friday, 9:00 to 17:00 Mauritius time (UTC+4)",
   },
 

@@ -383,7 +383,7 @@
  "English": "English",
  "Enquire": "Faire une demande",
  "Enquiry": "Demande",
- "Enter an email address we can reply to, like name@example.com": "Indiquez une adresse e-mail à laquelle répondre, par exemple nom@exemple.fr",
+ "Enter a complete email address we can reply to.": "Indiquez une adresse e-mail complète à laquelle nous pouvons répondre.",
  "Enter how many adults are travelling (at least 1)": "Indiquez le nombre d’adultes (au moins 1)",
  "Enter your name": "Indiquez votre nom",
  "Escape": "Escape",
@@ -600,7 +600,6 @@
  "Port Louis Central Market is famous for it; most markets have an alouda stall.": "Le marché central de Port-Louis est réputé pour cela ; la plupart des marchés ont un stand d’alouda.",
  "Port Louis Chinatown, food courts and snack counters across the island.": "Le quartier chinois de Port-Louis, les food courts et les comptoirs à en-cas de toute l’île.",
  "Port Louis empties out in the evening, so plan your street-food day around office hours. Arrive by mid-morning, park once (or come by Metro Express from Rose-Hill or Curepipe), and walk.": "Port-Louis se vide le soir : organisez votre journée street-food autour des heures de bureau. Arrivez en milieu de matinée, garez-vous une fois (ou venez en Metro Express depuis Rose-Hill ou Curepipe), et marchez.",
- "Port Louis, Mauritius": "Port-Louis, Maurice",
  "Port Mathurin market": "Marché de Port Mathurin",
  "Practical notes": "Notes pratiques",
  "Practical, seasonal advice for travelling Mauritius and Rodrigues beyond the resort.": "Des conseils pratiques et de saison pour voyager à Maurice et à Rodrigues au-delà des resorts.",
@@ -878,5 +877,6 @@
  "Île aux Cerfs": "Île aux Cerfs",
  "Île aux Cocos": "Île aux Cocos",
  "€1,500 to €3,000": "1 500 € à 3 000 €",
- "€3,000 to €5,000": "3 000 € à 5 000 €"
+ "€3,000 to €5,000": "3 000 € à 5 000 €",
+ "Regus Nexsky Building, 7th Floor, Hotel Street, Cybercity, Ebène 72201, Mauritius": "Regus Nexsky Building, 7e étage, Hotel Street, Cybercité, Ebène 72201, Maurice"
 }
