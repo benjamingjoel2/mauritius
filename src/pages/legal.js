@@ -1,12 +1,11 @@
 // Privacy policy, booking terms and cookie policy. Copy lives in src/content/legal.js.
 const config = require("../../site.config");
 const { LEGAL } = require("../content/legal");
-const legalOptions = require("../content/legal-options");
 const { pageHero } = require("../templates/components");
 
 module.exports = () => {
   const { brand } = config;
-  const docs = LEGAL.en(legalOptions("en"));
+  const docs = LEGAL.en();
 
   const page = (path, doc) => ({
     path,
@@ -16,7 +15,7 @@ module.exports = () => {
 ${pageHero({ kicker: "Legal", title: doc.title, lede: doc.intro })}
 <section class="sec">
   <div class="container post-body prose legal">
-    ${doc.sections.map((s) => `<h2>${s.h}</h2>\n${s.html.replace("COOKIES_URL", "/cookies/")}`).join("\n")}
+    ${doc.sections.map((s) => `<h2>${s.h}</h2>\n${s.html}`).join("\n")}
   </div>
 </section>`,
   });

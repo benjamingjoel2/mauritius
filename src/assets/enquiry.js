@@ -10,7 +10,7 @@
 
   var LABELS = {
     name: "Enter your name",
-    email: "Enter an email address we can reply to, like name@example.com",
+    email: "Enter a complete email address we can reply to.",
     month: "Choose roughly when you'd like to travel",
     adults: "Enter how many adults are travelling (at least 1)",
     consent: "Tick the box so we can use your details to reply",

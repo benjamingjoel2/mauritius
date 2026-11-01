@@ -383,7 +383,7 @@
  "English": "English",
  "Enquire": "Solicitar",
  "Enquiry": "Solicitud",
- "Enter an email address we can reply to, like name@example.com": "Indique un correo al que podamos responder, por ejemplo nombre@ejemplo.com",
+ "Enter a complete email address we can reply to.": "Indique una dirección de correo completa a la que podamos responder.",
  "Enter how many adults are travelling (at least 1)": "Indique cuántos adultos viajan (al menos 1)",
  "Enter your name": "Escriba su nombre",
  "Escape": "Escape",
@@ -600,7 +600,6 @@
  "Port Louis Central Market is famous for it; most markets have an alouda stall.": "El Mercado Central de Port Louis es famoso por ella; la mayoría de los mercados tienen un puesto de alouda.",
  "Port Louis Chinatown, food courts and snack counters across the island.": "El barrio chino de Port Louis, los food courts y los mostradores de tentempiés de toda la isla.",
  "Port Louis empties out in the evening, so plan your street-food day around office hours. Arrive by mid-morning, park once (or come by Metro Express from Rose-Hill or Curepipe), and walk.": "Port Louis se vacía por la noche, así que organice su día de comida callejera según el horario de oficina. Llegue a media mañana, aparque una sola vez (o venga en Metro Express desde Rose-Hill o Curepipe) y camine.",
- "Port Louis, Mauritius": "Port Louis, Mauricio",
  "Port Mathurin market": "Mercado de Port Mathurin",
  "Practical notes": "Notas prácticas",
  "Practical, seasonal advice for travelling Mauritius and Rodrigues beyond the resort.": "Consejos prácticos y de temporada para viajar por Mauricio y Rodrigues más allá de los resorts.",
@@ -878,5 +877,6 @@
  "Île aux Cerfs": "Île aux Cerfs",
  "Île aux Cocos": "Île aux Cocos",
  "€1,500 to €3,000": "De 1.500 € a 3.000 €",
- "€3,000 to €5,000": "De 3.000 € a 5.000 €"
+ "€3,000 to €5,000": "De 3.000 € a 5.000 €",
+ "Regus Nexsky Building, 7th Floor, Hotel Street, Cybercity, Ebène 72201, Mauritius": "Regus Nexsky Building, 7.ª planta, Hotel Street, Cybercity, Ebène 72201, Mauricio"
 }

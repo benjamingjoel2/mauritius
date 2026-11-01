@@ -383,7 +383,7 @@
  "English": "English",
  "Enquire": "Anfragen",
  "Enquiry": "Anfrage",
- "Enter an email address we can reply to, like name@example.com": "Geben Sie eine E-Mail-Adresse an, an die wir antworten können, z. B. name@beispiel.de",
+ "Enter a complete email address we can reply to.": "Geben Sie eine vollständige E-Mail-Adresse an, an die wir antworten können.",
  "Enter how many adults are travelling (at least 1)": "Geben Sie an, wie viele Erwachsene reisen (mindestens 1)",
  "Enter your name": "Geben Sie Ihren Namen ein",
  "Escape": "Escape",
@@ -600,7 +600,6 @@
  "Port Louis Central Market is famous for it; most markets have an alouda stall.": "Der Zentralmarkt von Port Louis ist dafür bekannt; die meisten Märkte haben einen Alouda-Stand.",
  "Port Louis Chinatown, food courts and snack counters across the island.": "Chinatown in Port Louis, Food Courts und Snacktheken überall auf der Insel.",
  "Port Louis empties out in the evening, so plan your street-food day around office hours. Arrive by mid-morning, park once (or come by Metro Express from Rose-Hill or Curepipe), and walk.": "Port Louis leert sich abends, planen Sie Ihren Streetfood-Tag also um die Bürozeiten. Kommen Sie am Vormittag, parken Sie einmal (oder nehmen Sie den Metro Express ab Rose-Hill oder Curepipe) und gehen Sie zu Fuß.",
- "Port Louis, Mauritius": "Port Louis, Mauritius",
  "Port Mathurin market": "Markt von Port Mathurin",
  "Practical notes": "Praktische Hinweise",
  "Practical, seasonal advice for travelling Mauritius and Rodrigues beyond the resort.": "Praktische, saisonale Tipps für Reisen auf Mauritius und Rodrigues jenseits der Resorts.",
@@ -878,5 +877,6 @@
  "Île aux Cerfs": "Île aux Cerfs",
  "Île aux Cocos": "Île aux Cocos",
  "€1,500 to €3,000": "1.500 € bis 3.000 €",
- "€3,000 to €5,000": "3.000 € bis 5.000 €"
+ "€3,000 to €5,000": "3.000 € bis 5.000 €",
+ "Regus Nexsky Building, 7th Floor, Hotel Street, Cybercity, Ebène 72201, Mauritius": "Regus Nexsky Building, 7. Stock, Hotel Street, Cybercity, Ebène 72201, Mauritius"
 }
