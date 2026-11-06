@@ -1,5 +1,6 @@
 const config = require("../../site.config");
 const { esc, getPhoto, photoUrl, preloadAttrs } = require("./helpers");
+const { enquiryCta } = require("./components");
 
 const NAV = [
   { href: "/regions/", label: "Regions" },
@@ -93,34 +94,40 @@ ${heroId ? `<link rel="preload" as="image" ${preloadAttrs(heroId)} fetchpriority
 <main id="main" tabindex="-1">
 ${body}
 </main>
+${/class="cta"/.test(body) || path.startsWith("/enquire/") ? "" : enquiryCta()}
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <div class="footer-intro">
-        <p class="label">${esc(brand.tagline)}</p>
-        <p class="footer-pitch">${esc(brand.pitch)}</p>
-        <a class="pill pill-light" href="/enquire/">Start an enquiry <span aria-hidden="true">→</span></a>
+      <div class="footer-brand">
+        <a class="footer-name" href="/">${esc(brand.name)}</a>
+        <p class="footer-line">${esc(brand.tagline)}</p>
+        <p><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></p>
+        <address>${esc(contact.address)}</address>
       </div>
-      <div>
-        <h2 class="label footer-heading">Explore</h2>
+      <nav aria-labelledby="footer-explore">
+        <h2 class="label footer-heading" id="footer-explore">Explore</h2>
         <ul class="footer-links" role="list">
-          ${NAV.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}
+          ${NAV.slice(0, 4).map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}
         </ul>
-      </div>
-      <div>
-        <h2 class="label footer-heading">Contact</h2>
+      </nav>
+      <nav aria-labelledby="footer-plan">
+        <h2 class="label footer-heading" id="footer-plan">Plan with ${esc(brand.name)}</h2>
         <ul class="footer-links" role="list">
-          <li><a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a></li>
-          <li>${esc(contact.address)}</li>
-          <li>${esc(contact.hours)}</li>
+          ${NAV.slice(4).map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}
+          <li><a href="/enquire/">Enquire</a></li>
         </ul>
-      </div>
+      </nav>
+      <nav aria-labelledby="footer-legal">
+        <h2 class="label footer-heading" id="footer-legal">Legal</h2>
+        <ul class="footer-links" role="list">
+          <li><a href="/privacy/">Privacy policy</a></li>
+          <li><a href="/booking-terms/">Booking terms</a></li>
+          <li><a href="/cookies/">Cookie policy</a></li>
+        </ul>
+      </nav>
     </div>
-    <p class="footer-wordmark" aria-hidden="true">${esc(brand.name)}</p>
     <div class="footer-small label">
       <p>© ${new Date().getFullYear()} ${esc(brand.name)}</p>
-      <p><a href="/privacy/">Privacy policy</a> · <a href="/booking-terms/">Booking terms</a> · <a href="/cookies/">Cookie policy</a></p>
-      <p>20°10′S 57°31′E · Indian Ocean</p>
     </div>
   </div>
 </footer>

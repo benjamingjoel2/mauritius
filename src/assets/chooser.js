@@ -37,10 +37,6 @@
     }).join("");
     field("extras").innerHTML = m.extras.map(function (e) { return "<li>" + escapeHtml(e) + "</li>"; }).join("");
 
-    root.querySelectorAll(".coast[data-coast]").forEach(function (path) {
-      var c = path.getAttribute("data-coast");
-      path.setAttribute("class", "coast coast-" + c + " rating-" + m.coasts[c]);
-    });
   }
 
   root.addEventListener("change", function (e) {
