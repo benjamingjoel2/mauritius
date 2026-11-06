@@ -1,7 +1,6 @@
 const { months, calmPicks, coastNames } = require("../content/months");
 const { esc, figure } = require("../templates/helpers");
 const { pageHero, sectionHead, enquiryCta } = require("../templates/components");
-const { coastMap } = require("../templates/map");
 
 const RATING = ["Breezy, choppy", "Fine", "Calmest"];
 const ORDER = ["north", "east", "south", "west"];
@@ -77,16 +76,6 @@ ${pageHero({
       </div>
 
       <div class="chooser-body">
-        <div class="chooser-map" data-map>
-          ${coastMap(first.coasts)}
-          <ul class="map-key label" role="list">
-            <li><span class="swatch rating-2"></span>Calmest</li>
-            <li><span class="swatch rating-1"></span>Fine</li>
-            <li><span class="swatch rating-0"></span>Breezy</li>
-            <li><span class="swatch swatch-kite"></span>Kite spot</li>
-          </ul>
-          <p class="map-note label">Schematic map, not to scale</p>
-        </div>
         <div aria-live="polite">${monthPanel(first)}</div>
       </div>
     </div>

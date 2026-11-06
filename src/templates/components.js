@@ -50,11 +50,14 @@ function sectionHead({ index, label, title, link, lede, id }) {
 
 function enquiryCta(text = "Tell us what you love doing and when you can travel. We'll suggest a route that fits.", photo = "WV4B_aVj0aQ") {
   return `<section class="cta" aria-labelledby="cta-title">
-  <div class="cta-media" aria-hidden="true">${img(photo, { sizes: "100vw", alt: "" })}</div>
+  <div class="cta-media" aria-hidden="true">${img(photo, { sizes: "100vw", ratio: 3, alt: "" })}</div>
   <div class="container cta-inner">
-    <p class="label">Plan with ${esc(config.brand.name)}</p>
-    <h2 class="display cta-title" id="cta-title"><a href="/enquire/">Start planning <span class="cta-arrow" aria-hidden="true">→</span></a></h2>
-    <p class="cta-text">${text}</p>
+    <div>
+      <p class="label">Plan with ${esc(config.brand.name)}</p>
+      <h2 class="display cta-title" id="cta-title">Start planning</h2>
+      <p class="cta-text">${text}</p>
+    </div>
+    <a class="pill pill-light" href="/enquire/">Start an enquiry <span aria-hidden="true">→</span></a>
   </div>
   <p class="credit cta-credit">${credit(photo)}</p>
 </section>`;
