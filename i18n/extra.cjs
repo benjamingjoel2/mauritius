@@ -3,6 +3,7 @@
 const { LEGAL } = require("../src/content/legal");
 const { zipRuns } = require("../scripts/translate-site.cjs");
 const config = require("../site.config");
+const photos = require("../src/content/photos");
 
 const render = (d) =>
   [d.privacy, d.terms, d.cookies]
@@ -19,5 +20,7 @@ module.exports = (lang) => {
     out[`${en[k].title} | ${name}`] = `${tr[k].title} | ${name}`;
     out[`${en[k].title} for ${name}.`] = `${tr[k].title} – ${name}.`;
   }
+  // Photo credits page: photographer names are not translated.
+  for (const p of Object.values(photos)) { const n = p.author.replace(/\s+/g, " ").trim(); out[`<a>${n}</a>`] = `<a>${n}</a>`; }
   return out;
 };

@@ -123,6 +123,7 @@ ${/class="cta"/.test(body) || path.startsWith("/enquire/") ? "" : enquiryCta()}
           <li><a href="/privacy/">Privacy policy</a></li>
           <li><a href="/booking-terms/">Booking terms</a></li>
           <li><a href="/cookies/">Cookie policy</a></li>
+          <li><a href="/photo-credits/">Photo credits</a></li>
         </ul>
       </nav>
     </div>

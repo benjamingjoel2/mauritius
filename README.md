@@ -74,7 +74,7 @@ Rules for adding one:
 2. Add it to `src/content/photos.js` with its `raw` URL, size, photographer name and username, the recorded `location`, and your own descriptive `alt` text.
 3. Use it by id: `figure("id")`, `img("id")` or the `photo` field in content files. The build stops if an id is missing from `photos.js`.
 
-The Unsplash licence does not require attribution, so captions show only the recorded location; photographer details stay in `src/content/photos.js`. If a Creative Commons image is ever added, it must be credited (bring back a credits page for those images only).
+Captions show only the recorded location: credits never sit on or under photos (owner rule, 8 Nov 2026). Every photo is credited (photographer, licence, source link) on `/photo-credits/`, generated from `src/content/photos.js` and linked from the footer. If a Creative Commons image is ever added, give its author and licence there too.
 
 The central plateau page uses a photo from Black River Gorges National Park (on the plateau's south-western edge) and says so in a caption. The tea and rum section has no photo, because no Unsplash photo with a matching recorded location turned up; it uses a Chamarel-earth colour panel instead.
 

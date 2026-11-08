@@ -730,3 +730,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px
 .lang-select a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; opacity: 1; }
 .lang-select-menu { color: var(--sand); margin-top: 2rem; }
 @media (max-width: 69.99em) { .js .lang-select-header { display: none; } }
+.photo-credits { list-style: none; padding: 0; }
+.photo-credit + .photo-credit { margin-top: 1.5rem; }
+.photo-credit p { margin: 0; }
+.photo-credit dl { display: grid; grid-template-columns: max-content 1fr; gap: 0 0.75em; margin: 0.25em 0 0; }
+.photo-credit dt { font-weight: 600; }
+.photo-credit dd { margin: 0; overflow-wrap: anywhere; }
+.photo-credit__place { font-weight: 600; }
